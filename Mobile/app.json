@@ -1,0 +1,26 @@
+{
+    "expo": {
+        "name": "meias-jamais",
+        "slug": "Meias-Jamais",
+        "platforms": ["ios", "android", "web"],
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "androidNavigationBar": {
+            "barStyle": "light-content",
+            "backgroundColor": "#3D3D3D"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true
+        }
+    }
+}
