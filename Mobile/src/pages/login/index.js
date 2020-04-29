@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {
     View,
     Image,
@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import { AppLoading } from 'expo';
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from '@use-expo/font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
+import RobotoFamily from '../../utils/RobotoFamily';
 import Constants from 'expo-constants';
 
 import { style } from './styles';
@@ -25,17 +25,6 @@ export default function Login() {
 
     const navigation = useNavigation();
 
-    //#region LoadFonts
-    const fonts = {
-        'Roboto-Regular': require('../../assets/font/Roboto-Regular.ttf'),
-        'Roboto-Italic': require('../../assets/font/Roboto-Italic.ttf'),
-        'Roboto-Light': require('../../assets/font/Roboto-Light.ttf'),
-        'Roboto-Medium': require('../../assets/font/Roboto-Medium.ttf'),
-        'Roboto-Thin': require('../../assets/font/Roboto-Thin.ttf'),
-    };
-    let [isFontsLoaded] = useFonts(fonts);
-    //#endregion
-
     function handleLogin() {
         navigation.reset({
             index: 0,
@@ -43,7 +32,7 @@ export default function Login() {
         });
     }
 
-    if (!isFontsLoaded) {
+    if (!RobotoFamily()) {
         return <AppLoading />;
     } else {
         return (

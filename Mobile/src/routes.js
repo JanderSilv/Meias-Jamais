@@ -26,7 +26,11 @@ export default function Routes() {
                     component={Login}
                     options={{ headerShown: false }}
                 />
-                <Tab.Screen name="Main" component={Main} />
+                <Tab.Screen
+                    name="Main"
+                    component={Main}
+                    options={{ headerShown: false }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
