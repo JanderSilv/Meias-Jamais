@@ -30,10 +30,8 @@ export default function Home() {
                         source={HeaderBackground}
                         style={style.headerBackground}
                     >
-                        <Text style={{ color: 'white', fontSize: 28 }}>
-                            Meu Feed
-                        </Text>
-                        <Text style={{ marginTop: 10, color: 'white' }}>
+                        <Text style={style.headerTitle}>Meu Feed</Text>
+                        <Text style={style.headerDescription}>
                             Veja o que seus amigos desejam comprar e os
                             presenteei
                         </Text>

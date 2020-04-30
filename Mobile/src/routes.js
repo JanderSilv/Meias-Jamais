@@ -25,6 +25,7 @@ export default function Routes() {
                     name="Home"
                     component={Home}
                     options={{
+                        title: 'Início',
                         tabBarIcon: ({ focused }) => {
                             let color = focused ? '#EF6360' : 'gray';
                             return (
@@ -47,7 +48,7 @@ export default function Routes() {
                             return (
                                 <FontAwesome
                                     name="heart"
-                                    size={25}
+                                    size={23}
                                     color={color}
                                 />
                             );

@@ -2,12 +2,20 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 export const style = StyleSheet.create({
+    fontFamily: {
+        fontFamily: Platform.OS === 'ios' ? 'San Francisco' : 'Roboto-Regular',
+    },
+
     headerBackground: {
         width: '100%',
         height: 228,
         paddingTop: 20,
         alignItems: 'center',
     },
+
+    headerTitle: { color: 'white', fontSize: 28 },
+
+    headerDescription: { marginTop: 10, color: 'white' },
 
     postContainer: {
         justifyContent: 'center',

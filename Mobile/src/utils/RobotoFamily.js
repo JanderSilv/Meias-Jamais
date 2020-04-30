@@ -8,6 +8,6 @@ export default function loadRobotoFont() {
         'Roboto-Medium': require('../assets/font/Roboto-Medium.ttf'),
         'Roboto-Thin': require('../assets/font/Roboto-Thin.ttf'),
     };
-    let [isFontsLoaded] = useFonts(fonts);
+    const [isFontsLoaded] = useFonts(fonts);
     return isFontsLoaded;
 }
