@@ -7,6 +7,7 @@ import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import Login from './pages/login';
 import Home from './pages/home';
 import Contacts from './pages/contacts';
+import Profile from './pages/profile';
 
 export default function Routes() {
     const Stack = createStackNavigator();
@@ -48,6 +49,24 @@ export default function Routes() {
                             return (
                                 <FontAwesome
                                     name="heart"
+                                    size={23}
+                                    color={color}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={Profile}
+                    options={{
+                        title: 'Perfil',
+                        tabBarIcon: ({ focused }) => {
+                            const color = focused ? '#EF6360' : 'gray';
+                            return (
+                                <FontAwesome5
+                                    solid
+                                    name="user"
                                     size={23}
                                     color={color}
                                 />

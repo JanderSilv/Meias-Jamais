@@ -8,7 +8,7 @@ export const style = StyleSheet.create({
 
     //#region HeaderStyles
     headerBackground: {
-        height: 148.5,
+        height: 142,
         paddingTop: 20,
         alignItems: 'center',
     },

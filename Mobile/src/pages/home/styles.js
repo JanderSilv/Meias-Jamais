@@ -7,8 +7,7 @@ export const style = StyleSheet.create({
     },
 
     headerBackground: {
-        width: '100%',
-        height: 228,
+        height: 216,
         paddingTop: 20,
         alignItems: 'center',
     },
