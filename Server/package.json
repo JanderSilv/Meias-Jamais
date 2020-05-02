@@ -2,7 +2,7 @@
   "name": "Server",
   "version": "1.0.0",
   "description": "backend server",
-  "main": "src/index.js",
+  "main": "src/server/server.js",
   "author": "Ruan Azevedo",
   "license": "MIT",
   "dependencies": {

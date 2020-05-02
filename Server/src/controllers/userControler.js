@@ -1,4 +1,4 @@
-const connection = require('../database/connection');
+const connection = require('./../database/connetcion');
 
 module.exports = {
 
@@ -6,7 +6,7 @@ module.exports = {
         connection('usuario').select('*').then(res=>{
             response.json(res);
         }).catch(error=>{
-            response.json('{ erro:'+error.toString()+'}');
+            response.json({err:error,msg: error.toString()});
         })
     },
 
@@ -15,24 +15,24 @@ module.exports = {
         connection('usuario').where('id',id).then(res=>{
             response.json(res);
         }).catch(error=>{
-            response.json({ erro:error.toString()});
+            response.json({err:error,msg: error.toString()});
         })
     },
 
     create(request,response){
-        const{nome,nome_usuario,descricao,dt_criacao,dt_aniversario} = request.body;
-        connection('usuario').returning('id').insert(
+        const{nome,nome_de_usuario,descricao,dt_aniversario} = request.body;
+        connection('usuario').insert(
             {
             nome,
-            nome_usuario,
+            nome_de_usuario,
             descricao,
-            dt_criacao,
-            dt_aniversario
+            dt_criacao: Date.now().toString(),
+            dt_aniversario:new Date(dt_aniversario)
             }).then(res=>{
-                const ID = res.id; 
-                return response.json({id: ID});
+                const [id] = res;
+                return response.json({id});
             }).catch(error=>{
-                return response.json({erro: error.toString()});
+                response.json({err:error,msg: error.toString()});
             })
     },
 
@@ -41,7 +41,7 @@ module.exports = {
         connection('usuario').where('id',id).del().then(res=>{
             response.json(res);
         }).catch(error=>{
-            response.json({ erro:error.toString()});
+            response.json({err:error,msg: error.toString()});
         })
     },
 
@@ -51,21 +51,42 @@ module.exports = {
             usuario_id: id,
             usuario_seguido_id:id_seguido
         }).then(res=>{
-            return response.json(res)
+            const [id] = res
+            return response.json({id})
         }).catch(error=>{
-            return response.json(error)
+            response.json({err:error,msg: error.toString()});
         })
     },
 
     remFolower(request,response){
         const {id,id_removido} = request.body
         connection('usuario_usuario')
-        .where({usuario_id:id,usuario_seguido_id: id_removido})
+        .where('usuario_id',id).where('usuario_seguido_id', id_removido)
         .del()
         .then(res=>{
             return response.json(res)
         }).catch(error=>{
-            return response.json(error)
+            response.json({err:error,msg: error.toString()});
+        })
+    },
+
+    getFollower(request,response){
+        const {id} = request.params
+        console.log({id})
+        connection('usuario_usuario').where('usuario_seguido_id', id).then(res=>{
+            return response.json(res);
+        }).catch(error =>{
+            response.json({err:error,msg: error.toString()});
+        })
+    },
+
+    getFollowing(request,response){
+        const {id} = request.params
+        console.log({id})
+        connection('usuario_usuario').where('usuario_id',id).then(res=>{
+            return response.json(res);
+        }).catch(error =>{
+            response.json({err:error,msg: error.toString()});
         })
     }
 }
