@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
 
 export const style = StyleSheet.create({
     fontFamily: {
@@ -12,6 +12,7 @@ export const style = StyleSheet.create({
         paddingTop: 15,
         paddingHorizontal: 20,
         backgroundColor: '#FF7A7A',
+        elevation: 4,
     },
 
     topContainer: {
@@ -101,9 +102,8 @@ export const style = StyleSheet.create({
     //#endregion
 
     //#region WishListStyles
-
     wishListContainer: {
-        width: '92%',
+        width: '94%',
         marginTop: 20,
         paddingVertical: 20,
         backgroundColor: '#F1F1F1',
@@ -123,12 +123,12 @@ export const style = StyleSheet.create({
         backgroundColor: '#FF6B6B',
 
         flexDirection: 'row',
+        position: 'relative',
     },
 
     categoryContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        // justifyContent: 'center',
     },
 
     categoryIcon: {
@@ -179,15 +179,22 @@ export const style = StyleSheet.create({
     },
 
     optionsButton: {
-        width: 20,
-        height: 20,
-        borderRadius: 50,
-        position: 'absolute',
-        right: 10,
-        top: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#F5F5F5',
     },
     //#endregion
 });
+
+export const triggerStyles = {
+    triggerWrapper: {
+        paddingRight: 5,
+    },
+    TriggerTouchableComponent: TouchableOpacity,
+};
+
+export const optionsStyles = {
+    optionsContainer: {
+        width: '35%',
+        paddingVertical: 5,
+    },
+};
