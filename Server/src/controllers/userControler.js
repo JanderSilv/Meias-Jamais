@@ -18,6 +18,16 @@ module.exports = {
             response.json({ err: error, msg: error.toString() });
         })
     },
+    update(request, response) {
+        const { nome, descricao } = request.body;
+        connection('usuario').where('id', id).update({
+            nome, descricao
+        }).then(res => {
+            response.json(res)
+        }).catch(error => {
+            response.json({ err: error, msg: error.toString() });
+        })
+    },
 
     create(request, response) {
         const { nome, nome_de_usuario, descricao, dt_aniversario } = request.body;
