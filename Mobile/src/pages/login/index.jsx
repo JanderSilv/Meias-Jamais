@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import {
     View,
     Image,
@@ -12,24 +12,24 @@ import { AppLoading } from 'expo';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
-import RobotoFamily from '../../utils/RobotoFamily';
 import Constants from 'expo-constants';
+
+import AuthContext from '../../contexts/auth';
+import RobotoFamily from '../../utils/RobotoFamily';
 
 import { style } from './styles';
 import Logo from '../../assets/logo/logo.png';
 import InputBackground from '../../assets/login/inputBackground.png';
 
 export default function Login() {
+    const { signed, user, Login } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const navigation = useNavigation();
 
     function handleLogin() {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Main' }],
-        });
+        Login();
     }
 
     if (!RobotoFamily()) {
