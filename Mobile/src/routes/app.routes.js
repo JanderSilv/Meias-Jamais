@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
@@ -7,9 +6,32 @@ import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import Home from '../pages/home';
 import Contacts from '../pages/contacts';
 import Profile from '../pages/profile';
+import AnotherProfile from '../pages/anotherProfile';
 
 export default function AppRoutes() {
     const Tab = createBottomTabNavigator();
+    const Stack = createStackNavigator();
+
+    function HomeScreen() {
+        return (
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Home"
+                    component={Home}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="AnotherProfile"
+                    component={AnotherProfile}
+                    options={{
+                        title: 'Perfil de Wassim',
+                        headerTintColor: '#F5F5F5',
+                        headerStyle: { backgroundColor: '#FF7A7A' },
+                    }}
+                />
+            </Stack.Navigator>
+        );
+    }
 
     return (
         <Tab.Navigator
@@ -20,8 +42,8 @@ export default function AppRoutes() {
             }}
         >
             <Tab.Screen
-                name="Home"
-                component={Home}
+                name="HomeScreen"
+                component={HomeScreen}
                 options={{
                     title: 'Início',
                     tabBarIcon: ({ focused }) => {

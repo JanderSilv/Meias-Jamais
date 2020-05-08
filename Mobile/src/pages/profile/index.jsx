@@ -23,17 +23,13 @@ export default function Profile() {
         <View style={{ flex: 1 }}>
             <View style={style.headerBackground}>
                 <View style={style.topContainer}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Image
-                            source={UserImage}
-                            style={{
-                                width: 65,
-                                height: 65,
-                                resizeMode: 'contain',
-                            }}
-                        />
-                        <Text style={style.userName}>Tyler Nyx</Text>
-                        <Text style={style.userTag}>@TylerNyx</Text>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            maxwidth: 100,
+                        }}
+                    >
+                        <Image source={UserImage} style={style.userImage} />
                     </View>
                     <View style={style.centerContainer}>
                         <TouchableOpacity style={style.followersWrapper}>
@@ -83,6 +79,10 @@ export default function Profile() {
                             />
                         </TouchableOpacity>
                     </View>
+                </View>
+                <View style={{ marginTop: 5 }}>
+                    <Text style={style.userName}>Tyler Nyx</Text>
+                    <Text style={style.userTag}>@TylerNyx</Text>
                 </View>
                 <Text style={style.descriptionText}>
                     Quer me enviar um presente e não sabe o que? Essa é uma

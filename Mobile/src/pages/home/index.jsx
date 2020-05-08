@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';
 import RobotoFamily from '../../utils/RobotoFamily';
@@ -21,6 +22,7 @@ import ProductImage from '../../assets/main/productImage.png';
 import { AppLoading } from 'expo';
 
 export default function Home() {
+    const navigation = useNavigation();
     const { Logout } = useContext(AuthContext);
 
     function handleLogout() {
@@ -60,7 +62,13 @@ export default function Home() {
                     <View style={style.postContainer}>
                         {/* PostTitle */}
                         <View style={style.postDescriptionContainer}>
-                            <TouchableOpacity onPress={handleLogout}>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    navigation.navigate('HomeScreen', {
+                                        screen: 'AnotherProfile',
+                                    })
+                                }
+                            >
                                 <Image
                                     source={AlexBracken}
                                     style={style.userImage}

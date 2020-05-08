@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export const style = StyleSheet.create({
     fontFamily: {
@@ -8,9 +9,9 @@ export const style = StyleSheet.create({
 
     //#region HeaderStyles
     headerBackground: {
-        paddingTop: 15,
-        paddingBottom: 30,
-        paddingHorizontal: 20,
+        paddingVertical: 15,
+        paddingLeft: 20,
+        paddingRight: 10,
         backgroundColor: '#FF7A7A',
         elevation: 4,
     },
@@ -18,6 +19,7 @@ export const style = StyleSheet.create({
     topContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingRight: 40,
     },
 
     //#region LeftSideStyles
@@ -51,7 +53,6 @@ export const style = StyleSheet.create({
 
     followersWrapper: {
         alignItems: 'center',
-        // justifyContent: 'center',
     },
 
     followersContainer: {
@@ -75,35 +76,44 @@ export const style = StyleSheet.create({
         marginTop: 10,
         color: 'white',
     },
+
+    followButtonContainer: {
+        marginTop: 20,
+        alignItems: 'flex-end',
+    },
+
+    followButton: {
+        width: '35%',
+        height: 30,
+        paddingHorizontal: 10,
+
+        backgroundColor: '#F5F5F5',
+        borderRadius: 50,
+        elevation: 4,
+
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+
+    followButtonText: {
+        color: '#707070',
+        fontSize: 16,
+        fontFamily: 'Roboto-Light',
+    },
     //#endregion
 
     //#region WishListHeaderStyles
     wishListHeaderContainer: {
+        marginLeft: 20,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
 
     wishListHeaderTitle: {
         color: '#595959',
         fontFamily: 'Roboto-Light',
         fontSize: 18,
-    },
-
-    addProductButton: {
-        width: '40%',
-        height: 30,
-        paddingHorizontal: 10,
-        backgroundColor: '#FF7A7A',
-        borderRadius: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-
-    addProductButtonText: {
-        color: 'white',
-        fontFamily: 'Roboto-Light',
     },
     //#endregion
 

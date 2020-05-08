@@ -1,7 +1,22 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
+import {
+    FontAwesome5,
+    MaterialIcons,
+    FontAwesome,
+    Feather,
+} from '@expo/vector-icons';
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
 
-// import { Container } from './styles';
+import { style, triggerStyles, optionsStyles } from './styles';
+import UserImage from '../../assets/anotherProfile/wassimChouak.png';
+import CategoryIcon from '../../assets/main/categoryIcon.png';
+import ProductImage from '../../assets/main/productImage.png';
 
 export default function AnotherProfile() {
     return (
@@ -9,16 +24,7 @@ export default function AnotherProfile() {
             <View style={style.headerBackground}>
                 <View style={style.topContainer}>
                     <View style={{ alignItems: 'center' }}>
-                        <Image
-                            source={UserImage}
-                            style={{
-                                width: 65,
-                                height: 65,
-                                resizeMode: 'contain',
-                            }}
-                        />
-                        <Text style={style.userName}>Tyler Nyx</Text>
-                        <Text style={style.userTag}>@TylerNyx</Text>
+                        <Image source={UserImage} style={style.userImage} />
                     </View>
                     <View style={style.centerContainer}>
                         <TouchableOpacity style={style.followersWrapper}>
@@ -59,33 +65,27 @@ export default function AnotherProfile() {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <View>
-                        <TouchableOpacity>
-                            <MaterialIcons
-                                name="settings"
-                                size={23}
-                                color="white"
-                            />
-                        </TouchableOpacity>
-                    </View>
+                </View>
+                <View style={{ marginTop: 5 }}>
+                    <Text style={style.userName}>Wassim Chouak</Text>
+                    <Text style={style.userTag}>@WassimChouak</Text>
                 </View>
                 <Text style={style.descriptionText}>
                     Quer me enviar um presente e não sabe o que? Essa é uma
                     lista de alguns que eu gostaria de receber.
                 </Text>
+                <View style={style.followButtonContainer}>
+                    <TouchableOpacity style={style.followButton}>
+                        <Text style={style.followButtonText}>Seguir</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View style={{ paddingTop: 20 }}>
                 {/* ProductsHeader */}
                 <View style={style.wishListHeaderContainer}>
                     <Text style={style.wishListHeaderTitle}>
-                        Minha lista de desejos:
+                        Lista de desejo de Wassim:
                     </Text>
-                    <TouchableOpacity style={style.addProductButton}>
-                        <FontAwesome5 name="plus" size={15} color="white" />
-                        <Text style={style.addProductButtonText}>
-                            Adicionar produto
-                        </Text>
-                    </TouchableOpacity>
                 </View>
                 {/* Wishlist */}
                 <View style={style.wishListContainer}>
