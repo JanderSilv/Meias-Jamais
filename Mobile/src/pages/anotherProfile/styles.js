@@ -1,6 +1,4 @@
-import React from 'react';
 import { StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export const style = StyleSheet.create({
     fontFamily: {
@@ -127,76 +125,6 @@ export const style = StyleSheet.create({
         elevation: 4,
         alignItems: 'center',
         alignSelf: 'center',
-    },
-
-    productContainer: {
-        width: '90%',
-        height: 116,
-
-        paddingVertical: 10,
-        paddingLeft: 20,
-        borderRadius: 8,
-        backgroundColor: '#FF6B6B',
-
-        flexDirection: 'row',
-        position: 'relative',
-    },
-
-    categoryContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    categoryIcon: {
-        width: 18,
-        height: 18,
-        marginTop: 3,
-    },
-
-    categoryText: {
-        marginLeft: 5,
-        color: 'white',
-        fontSize: 16,
-        fontFamily: 'Roboto-Light',
-    },
-
-    productText: {
-        marginTop: 10,
-        color: 'white',
-        fontSize: 16,
-        fontFamily: 'Roboto-Light',
-    },
-
-    buttonsContainer: {
-        marginTop: 20,
-        flexDirection: 'row',
-    },
-
-    messageContainer: {
-        marginLeft: 20,
-        flexDirection: 'row',
-    },
-
-    messageCount: {
-        marginLeft: 5,
-        color: 'white',
-    },
-
-    productImageContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    productImage: {
-        width: '100%',
-        height: 103,
-        resizeMode: 'contain',
-    },
-
-    optionsButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     //#endregion
 });
