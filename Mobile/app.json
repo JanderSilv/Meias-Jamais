@@ -1,15 +1,24 @@
 {
     "expo": {
-        "name": "meias-jamais",
+        "name": "Meias? Jamais",
         "slug": "Meias-Jamais",
         "platforms": ["ios", "android", "web"],
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/icon.png",
+        "icon": "./assets/Icon.png",
         "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "image": "./assets/splash_mdpi.png",
+            "mdpi": "./assets/splash_mdpi.png",
+            "hdpi": "./assets/splash_hdpi.png",
+            "ldpi": "./assets/splash_ldpi.png",
+            "xhdpi": "./assets/splash_xhdpi.png",
+            "xxhdpi": "./assets/splash_xxhdpi.png",
+            "xxxhdpi": "./assets/splash_xxxhdpi.png",
+            "resizeMode": "cover"
+        },
+        "androidStatusBar": {
+            "barStyle": "light-content",
+            "backgroundColor": "#00000000"
         },
         "androidNavigationBar": {
             "barStyle": "light-content",
