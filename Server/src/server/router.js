@@ -6,6 +6,7 @@ const userControler = require('./../controllers/userControler')
 const postControler = require('./../controllers/postControler')
 const curtidasControler = require('./../controllers/curtidasControler')
 const comentatiosControler = require('./../controllers/comentariosControler')
+const interesseControler = require('./../controllers/interessesControler')
 
 //#region USER
 
@@ -30,12 +31,6 @@ routes.delete('/user/remFollower', userControler.remFolower)
 //atualiza os dados de um usuario
 routes.put('/user/update', userControler.update)
 
-//buscar curtidas do usuario
-routes.get('/user/curtidas/:id', curtidasControler.getByUser)
-
-//buscar comentarios do usuario
-routes.get('/user/comentarios/:id', comentatiosControler.getByUser)
-
 routes.post('/user/create', userControler.create)
 /*
 cria um novo usuário
@@ -56,8 +51,6 @@ passa a seguir um usuário
 }
 */
 
-
-routes.post('/upload/image', ImageUpload.single('file'))
 //#endregion
 
 //#region POST
@@ -74,9 +67,12 @@ routes.put('/post/update', postControler.update)
 
 routes.get('/comentarios', comentatiosControler.index)
 routes.get('/comentarios/posts/:id', comentatiosControler.getByPost)
-routes.delete('/comentatios/remove/:userId/:postId', comentatiosControler.remove)
+routes.delete('/comentarios/remove/:userId/:postId', comentatiosControler.remove)
 routes.put('/comentarios/update', comentatiosControler.update)
 routes.post('/comentarios/create', comentatiosControler.create)
+
+//buscar comentarios do usuario
+routes.get('/comentarios/user/:id', comentatiosControler.getByUser)
 
 //#endregion
 
@@ -91,6 +87,34 @@ routes.post('/curtidas/create/:userId/:postId', curtidasControler.create)
 //remove a curtida de um post
 routes.delete('curtidas/remove/:userId/:postId', curtidasControler.remove)
 
+//buscar curtidas do usuario
+routes.get('/curtidas/user/:id', curtidasControler.getByUser)
+
 //#endregion
 
+//#region IMAGENS
+routes.post('/upload/image', ImageUpload.single('file'))
+
+//#endregion
+
+//#region INTERESSES
+
+//busca os interesses de um usuario
+routes.get('/interesses/user/:id', interesseControler.getByUser)
+
+//busca os usuarios interessados em um post
+routes.get('/interesses/post/:id', interesseControler.getByPost)
+
+//adiciona um usuario na lista de interessados
+routes.post('/interesses/create/:userId/:postId', interesseControler.create)
+
+//remove um usuario da lista de interessados
+routes.delete('/interesses/remove/:userId/:postId', interesseControler.remove)
+
+//remove todos os interessados de um post
+routes.delete('/interesses/post/remove/:postId', interesseControler.removeByPost)
+
+//remove todos os interesses de um usuario
+routes.delete('/interesses/user/remove/:postId', interesseControler.removeByUser)
+//#endregion
 module.exports = routes;

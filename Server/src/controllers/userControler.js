@@ -18,6 +18,7 @@ module.exports = {
             response.json({ err: error, msg: error.toString() });
         })
     },
+
     update(request, response) {
         const { nome, descricao } = request.body;
         connection('usuario').where('id', id).update({
@@ -30,14 +31,15 @@ module.exports = {
     },
 
     create(request, response) {
-        const { nome, nome_de_usuario, descricao, dt_aniversario } = request.body;
+        const { nome, nome_de_usuario, descricao, dt_aniversario, image_link } = request.body;
         connection('usuario').insert(
             {
                 nome,
                 nome_de_usuario,
                 descricao,
                 dt_criacao: Date.now().toString(),
-                dt_aniversario: new Date(dt_aniversario)
+                dt_aniversario: new Date(dt_aniversario),
+                image_link
             }).then(res => {
                 const [id] = res;
                 return response.json({ id });
