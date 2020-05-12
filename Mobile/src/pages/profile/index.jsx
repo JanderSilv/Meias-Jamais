@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import {
     FontAwesome5,
@@ -13,12 +13,16 @@ import {
     MenuTrigger,
 } from 'react-native-popup-menu';
 
+import AuthContext from '../../contexts/auth';
+
 import { style, triggerStyles, optionsStyles } from './styles';
 import UserImage from '../../assets/profile/userImage.png';
 import CategoryIcon from '../../assets/main/categoryIcon.png';
 import ProductImage from '../../assets/main/productImage.png';
 
 export default function Profile() {
+    // const { Logout } = useContext(AuthContext);
+
     return (
         <View style={{ flex: 1 }}>
             <View style={style.headerBackground}>
@@ -71,7 +75,7 @@ export default function Profile() {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={Logout}>
                             <MaterialIcons
                                 name="settings"
                                 size={23}
