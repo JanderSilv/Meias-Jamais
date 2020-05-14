@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
 
 export const style = StyleSheet.create({
     fontFamily: {

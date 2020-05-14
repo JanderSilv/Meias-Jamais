@@ -17,7 +17,8 @@
                 "ldpi": "./assets/splash_ldpi.png",
                 "xhdpi": "./assets/splash_xhdpi.png",
                 "xxhdpi": "./assets/splash_xxhdpi.png",
-                "xxxhdpi": "./assets/splash_xxxhdpi.png"
+                "xxxhdpi": "./assets/splash_xxxhdpi.png",
+                "resizeMode": "cover"
             }
         },
         "androidStatusBar": {

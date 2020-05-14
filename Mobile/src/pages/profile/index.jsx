@@ -21,7 +21,7 @@ import CategoryIcon from '../../assets/main/categoryIcon.png';
 import ProductImage from '../../assets/main/productImage.png';
 
 export default function Profile() {
-    // const { Logout } = useContext(AuthContext);
+    const { Logout } = useContext(AuthContext);
 
     return (
         <View style={{ flex: 1 }}>

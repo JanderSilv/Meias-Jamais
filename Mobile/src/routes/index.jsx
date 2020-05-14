@@ -11,9 +11,9 @@ const Routes = () => {
 
     //modificar para esperar na SplashScreen
     //react-native-splash-screen
-    if (loading) {
-        return <AppLoading />;
-    }
+    // if (loading) {
+    // return <AppLoading />;
+    // }
 
     return signed ? <AppRoutes /> : <AuthRoutes />;
 };

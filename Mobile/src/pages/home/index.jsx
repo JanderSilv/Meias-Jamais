@@ -23,11 +23,7 @@ import { AppLoading } from 'expo';
 
 export default function Home() {
     const navigation = useNavigation();
-    const { Logout } = useContext(AuthContext);
-
-    function handleLogout() {
-        Logout();
-    }
+    // const { Logout } = useContext(AuthContext);
 
     if (!RobotoFamily()) {
         return (
