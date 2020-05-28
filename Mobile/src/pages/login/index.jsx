@@ -120,7 +120,10 @@ export default function Login() {
                         <Text style={style.signInDescription}>
                             Não tem uma conta?{' '}
                         </Text>
-                        <TouchableOpacity style={style.fontFamily}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Register')}
+                            style={style.fontFamily}
+                        >
                             <Text
                                 style={[
                                     style.fontFamily,
