@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     View,
     Image,
@@ -10,9 +10,6 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
-import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
-import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
     Feather,
@@ -20,7 +17,9 @@ import {
     MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+
 import DateFunctions from '../../utils/DateFunctions';
+import ImagePicker from '../../utils/ImagePicker';
 
 import AvatarImage from '../../assets/register/avatarImage.png';
 import AvatarFrame from '../../assets/register/avatarFrame.png';
@@ -47,39 +46,6 @@ const Register = () => {
         setBirthday(date);
     };
 
-    useState(() => {
-        const getPermissionAsync = async () => {
-            if (Constants.platform.ios) {
-                const { status } = await Permissions.askAsync(
-                    Permissions.CAMERA_ROLL
-                );
-                if (status !== 'granted') {
-                    alert(
-                        'Desculpa, precisamos da permissão da câmera para seguirmos!'
-                    );
-                }
-            }
-        };
-        getPermissionAsync();
-    }, []);
-
-    const PickImage = async () => {
-        try {
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
-                aspect: [4, 3],
-                quality: 1,
-            });
-            if (!result.cancelled) {
-                setImage(result.uri);
-            }
-            // console.log(result);
-        } catch (E) {
-            console.log(E);
-        }
-    };
-
     return (
         <KeyboardAvoidingView
             style={{ flex: 1 }}
@@ -96,11 +62,11 @@ const Register = () => {
                         <View style={style.formWrapper}>
                             <View style={style.inputsWrapper}>
                                 <View style={style.imagePickerContainer}>
-                                    <TouchableOpacity
-                                        onPress={PickImage}
+                                    <ImagePicker
                                         style={{
                                             alignItems: 'center',
                                         }}
+                                        setImage={setImage}
                                     >
                                         <Image
                                             source={
@@ -116,7 +82,7 @@ const Register = () => {
                                                 style={style.avatarImage}
                                             />
                                         )}
-                                    </TouchableOpacity>
+                                    </ImagePicker>
                                 </View>
                                 <View style={style.inputsContainerPartOne}>
                                     <View style={{ flexDirection: 'row' }}>
