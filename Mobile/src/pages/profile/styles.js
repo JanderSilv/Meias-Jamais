@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
 
 export const style = StyleSheet.create({

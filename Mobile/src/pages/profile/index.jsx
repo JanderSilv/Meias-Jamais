@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import {
     FontAwesome5,
@@ -16,12 +16,28 @@ import {
 import AuthContext from '../../contexts/auth';
 
 import { style, triggerStyles, optionsStyles } from './styles';
+import AddProduct from './addProduct';
 import UserImage from '../../assets/profile/userImage.png';
 import CategoryIcon from '../../assets/main/categoryIcon.png';
 import ProductImage from '../../assets/main/productImage.png';
 
 export default function Profile() {
     const { Logout } = useContext(AuthContext);
+
+    const [showAddProduct, setShowAddProduct] = useState(false);
+
+    const handleOpenModal = () => {
+        setShowAddProduct(true);
+    };
+    const handleCloseModal = () => {
+        setShowAddProduct(false);
+    };
+
+    const AddProductModal = useMemo(() => {
+        return (
+            <AddProduct isOpen={showAddProduct} onClose={handleCloseModal} />
+        );
+    }, [showAddProduct]);
 
     return (
         <View style={{ flex: 1 }}>
@@ -99,7 +115,10 @@ export default function Profile() {
                     <Text style={style.wishListHeaderTitle}>
                         Minha lista de desejos:
                     </Text>
-                    <TouchableOpacity style={style.addProductButton}>
+                    <TouchableOpacity
+                        style={style.addProductButton}
+                        onPress={handleOpenModal}
+                    >
                         <FontAwesome5 name="plus" size={15} color="white" />
                         <Text style={style.addProductButtonText}>
                             Adicionar produto
@@ -207,6 +226,7 @@ export default function Profile() {
                     </View>
                 </View>
             </View>
+            {AddProductModal}
         </View>
     );
 }
