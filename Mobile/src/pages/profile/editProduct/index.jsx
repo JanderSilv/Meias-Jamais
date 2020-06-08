@@ -19,11 +19,13 @@ import ImagePicker from '../../../utils/ImagePicker';
 
 import { style } from './styles';
 
-export default function AddProduct(props) {
+export default function EditProduct(props) {
     const { isOpen, onClose } = props;
 
     const [categorySelected, setCategorySelected] = useState('');
     const [image, setImage] = useState(null);
+
+    // Fazer chamada API para carregar os dados
 
     return (
         <Modal
