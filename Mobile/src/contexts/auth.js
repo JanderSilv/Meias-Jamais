@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         loadStoragedData();
     }, []);
 
-    function Login() {
+    function Login(data) {
         auth.signIn()
             .then(async (response) => {
                 // console.log(response);
