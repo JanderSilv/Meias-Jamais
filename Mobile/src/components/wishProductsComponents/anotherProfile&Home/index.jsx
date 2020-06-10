@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { AntDesign, FontAwesome, Feather } from '@expo/vector-icons';
-
 import { useNavigation } from '@react-navigation/native';
 
 import { style } from './styles';
-import CategoryIcon from '../../assets/main/categoryIcon.png';
-import ProductImage from '../../assets/main/productImage.png';
+import CategoryIcon from '../../../assets/main/categoryIcon.png';
+import ProductImage from '../../../assets/main/productImage.png';
 
 const WishProduct = () => {
     const navigation = useNavigation();

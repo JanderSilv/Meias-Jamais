@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import {
     View,
     Text,
@@ -7,16 +7,13 @@ import {
     Image,
     TouchableOpacity,
 } from 'react-native';
-import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { style } from './styles';
 import HeaderBackground from '../../assets/main/headerBackground.png';
-import WishProduct from '../../components/wishProduct';
+import WishProduct from '../../components/wishProductsComponents/anotherProfile&Home';
 
 import AlexBracken from '../../assets/main/alexBracken.png';
-import CategoryIcon from '../../assets/main/categoryIcon.png';
-import ProductImage from '../../assets/main/productImage.png';
 
 export default function Home() {
     const navigation = useNavigation();
