@@ -10,6 +10,8 @@ import Notifications from '../pages/notifications';
 import Profile from '../pages/profile';
 import AnotherProfile from '../pages/anotherProfile';
 
+import ConfigNotificationsButton from '../components/notifications/configNotifications';
+
 export default function AppRoutes() {
     function getRouteName(route) {
         // Access the tab navigator's state using `route.state`
@@ -17,7 +19,7 @@ export default function AppRoutes() {
             ? // Get the currently active route name in the tab navigator
               route.state.routes[route.state.index].name
             : // If state doesn't exist, we need to default to `screen` param if available, or the initial screen
-              // In our case, it's "Feed" as that's the first screen inside the navigator
+              // In our case, it's "Home" as that's the first screen inside the navigator
               route.params?.screen || 'Home';
 
         switch (routeName) {
@@ -42,6 +44,7 @@ export default function AppRoutes() {
                 navigation.setOptions({
                     headerShown: true,
                     headerTitle: routeName,
+                    headerRight: () => <ConfigNotificationsButton />,
                 });
             else
                 navigation.setOptions({
