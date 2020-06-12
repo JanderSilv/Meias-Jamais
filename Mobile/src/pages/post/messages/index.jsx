@@ -53,10 +53,10 @@ export default function messages() {
                 <Text style={style.postTimeText}>2 dias atrás</Text>
             </View>
             <View style={style.likeContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity style={style.likeButton}>
                     <FontAwesome name="heart-o" size={18} color="#707070" />
+                    <Text style={style.likeText}>Curtir</Text>
                 </TouchableOpacity>
-                <Text style={style.likeText}>Curtir</Text>
             </View>
             <View>
                 <View style={style.messageContainer}>

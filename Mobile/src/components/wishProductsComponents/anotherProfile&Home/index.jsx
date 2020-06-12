@@ -12,7 +12,7 @@ const WishProduct = () => {
 
     return (
         <View style={style.productContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Messages')}>
                 <View style={style.categoryContainer}>
                     <Image source={CategoryIcon} style={style.categoryIcon} />
                     <Text style={style.categoryText}>Livro</Text>

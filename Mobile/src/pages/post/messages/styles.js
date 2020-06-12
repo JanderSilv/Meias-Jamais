@@ -97,6 +97,9 @@ export const style = StyleSheet.create({
         marginTop: 20,
         borderWidth: 0.5,
         borderColor: '#D4D4D4',
+    },
+
+    likeButton: {
         flexDirection: 'row',
         alignItems: 'center',
     },
