@@ -12,11 +12,12 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+import { style, triggerStyles, optionsStyles } from './styles';
 
 import AuthContext from '../../contexts/auth';
 
-import { style, triggerStyles, optionsStyles } from './styles';
 import AddProduct from './addProduct';
+import EditProduct from './editProduct';
 import UserImage from '../../assets/profile/userImage.png';
 import CategoryIcon from '../../assets/main/categoryIcon.png';
 import ProductImage from '../../assets/main/productImage.png';
@@ -25,19 +26,39 @@ export default function Profile() {
     const { Logout } = useContext(AuthContext);
 
     const [showAddProduct, setShowAddProduct] = useState(false);
+    const [showEditProduct, setShowShowProduct] = useState(false);
 
-    const handleOpenModal = () => {
+    const handleOpenAddProductModal = () => {
         setShowAddProduct(true);
     };
-    const handleCloseModal = () => {
+    const handleCloseAddProductModal = () => {
+        setShowAddProduct(false);
+    };
+
+    const handleOpenEditProductModal = () => {
+        setShowAddProduct(true);
+    };
+    const handleCloseEditProductModal = () => {
         setShowAddProduct(false);
     };
 
     const AddProductModal = useMemo(() => {
         return (
-            <AddProduct isOpen={showAddProduct} onClose={handleCloseModal} />
+            <AddProduct
+                isOpen={showAddProduct}
+                onClose={handleCloseAddProductModal}
+            />
         );
     }, [showAddProduct]);
+
+    const EditProductModal = useMemo(() => {
+        return (
+            <EditProduct
+                isOpen={showEditProduct}
+                onClose={handleCloseEditProductModal}
+            />
+        );
+    }, [showEditProduct]);
 
     return (
         <View style={{ flex: 1 }}>
@@ -117,7 +138,7 @@ export default function Profile() {
                     </Text>
                     <TouchableOpacity
                         style={style.addProductButton}
-                        onPress={handleOpenModal}
+                        onPress={handleOpenAddProductModal}
                     >
                         <FontAwesome5 name="plus" size={15} color="white" />
                         <Text style={style.addProductButtonText}>
@@ -181,7 +202,7 @@ export default function Profile() {
                                         alignItems: 'center',
                                         justifyContent: 'space-evenly',
                                     }}
-                                    onSelect={() => alert(`Save`)}
+                                    onSelect={handleOpenEditProductModal}
                                 >
                                     <FontAwesome5
                                         name="pencil-alt"
@@ -226,6 +247,7 @@ export default function Profile() {
                     </View>
                 </View>
             </View>
+            {EditProductModal}
             {AddProductModal}
         </View>
     );

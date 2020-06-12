@@ -11,6 +11,7 @@ import {
     TouchableWithoutFeedback,
     TextInput,
     ScrollView,
+    StatusBar,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
@@ -32,6 +33,7 @@ export default function AddProduct(props) {
             visible={isOpen}
             onRequestClose={onClose}
         >
+            <StatusBar hidden translucent />
             <BlurView tint="dark" intensity={90} style={style.blur}>
                 <TouchableHighlight style={style.closeArea} onPress={onClose}>
                     <ScrollView
@@ -111,12 +113,7 @@ export default function AddProduct(props) {
                                             placeholderTextColor={'#ABABAB'}
                                         />
                                     </View>
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                        }}
-                                    >
+                                    <View style={style.inputContainer}>
                                         <Feather
                                             name="link"
                                             size={30}

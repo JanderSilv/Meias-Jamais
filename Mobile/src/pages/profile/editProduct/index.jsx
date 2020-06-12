@@ -17,7 +17,7 @@ import { Feather } from '@expo/vector-icons';
 import { categorys } from '../../../utils/productCategorys';
 import ImagePicker from '../../../utils/ImagePicker';
 
-import { style } from './styles';
+import { style } from '../addProduct/styles';
 
 export default function EditProduct(props) {
     const { isOpen, onClose } = props;
@@ -113,12 +113,7 @@ export default function EditProduct(props) {
                                             placeholderTextColor={'#ABABAB'}
                                         />
                                     </View>
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                        }}
-                                    >
+                                    <View style={style.inputContainer}>
                                         <Feather
                                             name="link"
                                             size={30}
