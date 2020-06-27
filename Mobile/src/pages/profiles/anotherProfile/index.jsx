@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-import WishProduct from '../../components/wishProductsComponents/anotherProfile&Home';
+import WishProduct from '../../../components/wishProductsComponents/anotherProfile&Home';
 
 import { style } from './styles';
-import UserImage from '../../assets/anotherProfile/wassimChouak.png';
+import UserImage from '../../../assets/anotherProfile/wassimChouak.png';
 
 export default function AnotherProfile() {
     return (

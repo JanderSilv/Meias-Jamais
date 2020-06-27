@@ -11,21 +11,20 @@ import {
     TouchableWithoutFeedback,
     TextInput,
     ScrollView,
+    StatusBar,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import { categorys } from '../../../utils/productCategorys';
-import ImagePicker from '../../../utils/ImagePicker';
+import { categorys } from '../../../../utils/productCategorys';
+import ImagePicker from '../../../../utils/ImagePicker';
 
-import { style } from '../addProduct/styles';
+import { style } from './styles';
 
-export default function EditProduct(props) {
+export default function AddProduct(props) {
     const { isOpen, onClose } = props;
 
     const [categorySelected, setCategorySelected] = useState('');
     const [image, setImage] = useState(null);
-
-    // Fazer chamada API para carregar os dados
 
     return (
         <Modal
@@ -34,6 +33,7 @@ export default function EditProduct(props) {
             visible={isOpen}
             onRequestClose={onClose}
         >
+            <StatusBar hidden translucent />
             <BlurView tint="dark" intensity={90} style={style.blur}>
                 <TouchableHighlight style={style.closeArea} onPress={onClose}>
                     <ScrollView

@@ -14,13 +14,13 @@ import {
 } from 'react-native-popup-menu';
 import { style, triggerStyles, optionsStyles } from './styles';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../../contexts/auth';
 
 import AddProduct from './addProduct';
 import EditProduct from './editProduct';
-import UserImage from '../../assets/profile/userImage.png';
-import CategoryIcon from '../../assets/main/categoryIcon.png';
-import ProductImage from '../../assets/main/productImage.png';
+import UserImage from '../../../assets/profile/userImage.png';
+import CategoryIcon from '../../../assets/main/categoryIcon.png';
+import ProductImage from '../../../assets/main/productImage.png';
 
 export default function Profile() {
     const { Logout } = useContext(AuthContext);
