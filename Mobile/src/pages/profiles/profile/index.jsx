@@ -12,6 +12,8 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+import { useNavigation } from '@react-navigation/native';
+
 import { style, triggerStyles, optionsStyles } from './styles';
 
 import AuthContext from '../../../contexts/auth';
@@ -24,6 +26,8 @@ import ProductImage from '../../../assets/main/productImage.png';
 
 export default function Profile() {
     const { Logout } = useContext(AuthContext);
+
+    const navigation = useNavigation();
 
     const [showAddProduct, setShowAddProduct] = useState(false);
     const [showEditProduct, setShowShowProduct] = useState(false);
@@ -73,7 +77,10 @@ export default function Profile() {
                         <Image source={UserImage} style={style.userImage} />
                     </View>
                     <View style={style.centerContainer}>
-                        <TouchableOpacity style={style.followersWrapper}>
+                        <TouchableOpacity
+                            style={style.followersWrapper}
+                            onPress={() => navigation.navigate('Followers')}
+                        >
                             <View style={style.followersContainer}>
                                 <Text style={style.followersCounter}>24</Text>
                                 <FontAwesome5

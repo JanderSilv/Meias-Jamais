@@ -7,8 +7,9 @@ import Home from '../pages/home';
 import Messages from '../pages/post/messages';
 import Contacts from '../pages/contacts';
 import Notifications from '../pages/notifications';
-import Profile from '../pages/profile';
-import AnotherProfile from '../pages/anotherProfile';
+import Profile from '../pages/profiles/profile';
+import AnotherProfile from '../pages/profiles/anotherProfile';
+import Followers from '../pages/profiles/components/followers';
 
 import ConfigNotificationsButton from '../components/notifications/configNotifications';
 
@@ -150,6 +151,15 @@ export default function AppRoutes() {
                 component={Messages}
                 options={{
                     title: 'Comentários',
+                    headerTintColor: '#F5F5F5',
+                    headerStyle: { backgroundColor: '#FF7A7A' },
+                }}
+            />
+            <Stack.Screen
+                name="Followers"
+                component={Followers}
+                options={{
+                    title: 'Tyler Nyx',
                     headerTintColor: '#F5F5F5',
                     headerStyle: { backgroundColor: '#FF7A7A' },
                 }}
