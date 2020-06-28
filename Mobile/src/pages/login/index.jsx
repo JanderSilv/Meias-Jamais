@@ -86,6 +86,7 @@ export default function Login() {
                         </View>
                         {errors.user && (
                             <RequiredMessage
+                                primary
                                 style={{
                                     alignSelf: 'flex-start',
                                     marginLeft: 30,
@@ -120,6 +121,7 @@ export default function Login() {
                         </View>
                         {errors.password && (
                             <RequiredMessage
+                                primary
                                 style={{
                                     alignSelf: 'flex-start',
                                     marginLeft: 30,
