@@ -79,7 +79,9 @@ export default function Profile() {
                     <View style={style.centerContainer}>
                         <TouchableOpacity
                             style={style.followersWrapper}
-                            onPress={() => navigation.navigate('Followers')}
+                            onPress={() =>
+                                navigation.navigate('Followers', { index: 0 })
+                            }
                         >
                             <View style={style.followersContainer}>
                                 <Text style={style.followersCounter}>24</Text>
@@ -95,7 +97,12 @@ export default function Profile() {
                                 Seguidores
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={style.followersWrapper}>
+                        <TouchableOpacity
+                            style={style.followersWrapper}
+                            onPress={() =>
+                                navigation.navigate('Followers', { index: 1 })
+                            }
+                        >
                             <View style={style.followersContainer}>
                                 <Text
                                     style={[

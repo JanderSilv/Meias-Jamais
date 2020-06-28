@@ -104,6 +104,12 @@ export const style = StyleSheet.create({
         opacity: 0.9,
     },
 
+    disabledButton: {
+        backgroundColor: '#e3e3e3',
+    },
+
+    disabledButtonText: { color: 'gray', opacity: 0.5 },
+
     buttonsContainer: {
         width: '90%',
         flexDirection: 'row',

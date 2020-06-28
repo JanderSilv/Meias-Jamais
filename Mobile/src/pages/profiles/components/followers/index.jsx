@@ -16,34 +16,18 @@ import { useNavigation } from '@react-navigation/native';
 
 import UserImage from '../../../../assets/profile/userImage.png';
 
-// import { Container } from './styles';
+import { style } from './styles';
 
 const FirstRoute = () => {
     const navigation = useNavigation();
 
     return (
-        <View style={styles.scene}>
-            <View
-                style={{
-                    width: '90%',
-                    marginTop: 20,
-                    paddingBottom: 10,
-                    borderBottomWidth: 1,
-                    borderBottomColor: '#FF6B6B',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                }}
-            >
+        <View style={style.container}>
+            <View style={style.searchContainer}>
                 <Octicons name="search" size={25} color="gray" />
                 <TextInput
                     placeholder={'Pesquise seguidores...'}
-                    style={{
-                        width: '80%',
-                        marginLeft: 15,
-                        color: '#212121',
-                    }}
+                    style={style.searchText}
                 />
             </View>
             <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
@@ -55,21 +39,8 @@ const FirstRoute = () => {
                     }}
                     onPress={() => navigation.navigate('AnotherProfile')}
                 >
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Image
-                            source={UserImage}
-                            style={{
-                                width: 54,
-                                height: 54,
-                                borderRadius: 50,
-                            }}
-                        />
+                    <View style={style.userContainer}>
+                        <Image source={UserImage} style={style.userImage} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ color: '#212121' }}>
                                 @jander.silv
@@ -79,13 +50,7 @@ const FirstRoute = () => {
                     </View>
                     <View>
                         <TouchableOpacity
-                            style={{
-                                paddingVertical: 3,
-                                paddingHorizontal: 5,
-                                borderWidth: 1,
-                                borderColor: 'gray',
-                                borderRadius: 7,
-                            }}
+                            style={style.followerButton}
                             onPress={() => console.log('oi')}
                         >
                             <Text>Remover</Text>
@@ -97,14 +62,54 @@ const FirstRoute = () => {
     );
 };
 
-const SecondRoute = () => (
-    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-);
+const SecondRoute = () => {
+    const navigation = useNavigation();
+
+    return (
+        <View style={style.container}>
+            <View style={style.searchContainer}>
+                <Octicons name="search" size={25} color="gray" />
+                <TextInput
+                    placeholder={'Pesquise quem está te seguindo...'}
+                    style={style.searchText}
+                />
+            </View>
+            <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                    }}
+                    onPress={() => navigation.navigate('AnotherProfile')}
+                >
+                    <View style={style.userContainer}>
+                        <Image source={UserImage} style={style.userImage} />
+                        <View style={{ marginLeft: 10 }}>
+                            <Text style={{ color: '#212121' }}>
+                                @jander.silv
+                            </Text>
+                            <Text style={{ color: 'gray' }}>Jander Silva</Text>
+                        </View>
+                    </View>
+                    <View>
+                        <TouchableOpacity
+                            style={style.followerButton}
+                            onPress={() => console.log('oi')}
+                        >
+                            <Text>Seguindo</Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+};
 
 const initialLayout = { width: Dimensions.get('window').width };
 
-export default function Followers() {
-    const [index, setIndex] = useState(0);
+export default function Followers(route) {
+    const [index, setIndex] = useState(route.route.params.index);
     const [routes] = useState([
         { key: 'first', title: '200 Seguidores' },
         { key: 'second', title: '239 Seguindo' },
@@ -132,12 +137,3 @@ export default function Followers() {
         />
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        marginTop: StatusBar.currentHeight,
-    },
-    scene: {
-        flex: 1,
-    },
-});

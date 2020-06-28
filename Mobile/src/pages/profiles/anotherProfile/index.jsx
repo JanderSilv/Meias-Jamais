@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import WishProduct from '../../../components/wishProductsComponents/anotherProfile&Home';
 
@@ -8,6 +9,8 @@ import { style } from './styles';
 import UserImage from '../../../assets/anotherProfile/wassimChouak.png';
 
 export default function AnotherProfile() {
+    const navigation = useNavigation();
+
     return (
         <View style={{ flex: 1 }}>
             <View style={style.headerBackground}>
@@ -16,7 +19,14 @@ export default function AnotherProfile() {
                         <Image source={UserImage} style={style.userImage} />
                     </View>
                     <View style={style.centerContainer}>
-                        <TouchableOpacity style={style.followersWrapper}>
+                        <TouchableOpacity
+                            style={style.followersWrapper}
+                            onPress={() =>
+                                navigation.navigate('Followers', {
+                                    index: 0,
+                                })
+                            }
+                        >
                             <View style={style.followersContainer}>
                                 <Text style={style.followersCounter}>24</Text>
                                 <FontAwesome5
@@ -31,7 +41,14 @@ export default function AnotherProfile() {
                                 Seguidores
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={style.followersWrapper}>
+                        <TouchableOpacity
+                            style={style.followersWrapper}
+                            onPress={() =>
+                                navigation.navigate('Followers', {
+                                    index: 1,
+                                })
+                            }
+                        >
                             <View style={style.followersContainer}>
                                 <Text
                                     style={[
