@@ -42,7 +42,15 @@ const WishProduct = () => {
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={style.productImageContainer}>
+            <TouchableOpacity
+                style={style.productImageContainer}
+                onPress={() =>
+                    navigation.navigate('WebView', {
+                        url:
+                            'https://www.amazon.com.br/dp/B07PZZ7BD6/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1',
+                    })
+                }
+            >
                 <Image source={ProductImage} style={style.productImage} />
             </TouchableOpacity>
         </View>

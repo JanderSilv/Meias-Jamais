@@ -10,6 +10,7 @@ import Notifications from '../pages/notifications';
 import Profile from '../pages/profiles/profile';
 import AnotherProfile from '../pages/profiles/anotherProfile';
 import Followers from '../pages/profiles/components/followers';
+import WebView from '../pages/WebView';
 
 import ConfigNotificationsButton from '../components/notifications/configNotifications';
 
@@ -162,6 +163,13 @@ export default function AppRoutes() {
                     title: 'Tyler Nyx',
                     headerTintColor: '#F5F5F5',
                     headerStyle: { backgroundColor: '#FF7A7A' },
+                }}
+            />
+            <Stack.Screen
+                name="WebView"
+                component={WebView}
+                options={{
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>
