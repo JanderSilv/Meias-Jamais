@@ -31,7 +31,8 @@ module.exports = {
     },
 
     create(request, response) {
-        const { nome, nome_de_usuario, descricao, dt_aniversario, image_link } = request.body;
+        const { nome, email, figura_publica, nome_de_usuario, descricao, dt_aniversario, image_link } = request.body;
+
         connection('usuario').insert(
             {
                 nome,
@@ -39,7 +40,9 @@ module.exports = {
                 descricao,
                 dt_criacao: Date.now().toString(),
                 dt_aniversario: new Date(dt_aniversario),
-                image_link
+                figura_publica,
+                image_link,
+                email
             }).then(res => {
                 const [id] = res;
                 return response.json({ id });
@@ -58,22 +61,24 @@ module.exports = {
     },
 
     addFolower(request, response) {
-        const { id, id_seguido } = request.body
+        const { my_id, followed_id, pendente } = request.body
         connection('usuario_usuario').insert({
-            usuario_id: id,
-            usuario_seguido_id: id_seguido
+            usuario_id: my_id,
+            usuario_seguido_id: followed_id,
+            pendente
         }).then(res => {
-            const [id] = res
-            return response.json({ id })
+            const [my_id] = res
+            return response.json({ my_id })
         }).catch(error => {
             response.json({ err: error, msg: error.toString() });
         })
     },
 
     remFolower(request, response) {
-        const { id, id_removido } = request.body
+        const { my_id, followed_id } = request.query
+
         connection('usuario_usuario')
-            .where('usuario_id', id).where('usuario_seguido_id', id_removido)
+            .where('usuario_id', my_id).where('usuario_seguido_id', followed_id)
             .del()
             .then(res => {
                 return response.json(res)

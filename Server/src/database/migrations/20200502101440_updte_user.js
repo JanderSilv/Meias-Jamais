@@ -1,19 +1,22 @@
 
 exports.up = function (knex) {
-    return knex.schema.createTable('usuario', table => {
-        table.increments('id');
-        table.string('nome', 255).notNullable();
-        table.string('nome_de_usuario', 255).notNullable();
-        table.string('descricao', 255);
-        table.date('dt_criacao').notNullable();
-        table.date('dt_aniversario').notNullable();
-        table.boolean('figura_publica').notNullable();
-        table.string('image_link', 512).notNullable();
-    })
+    return knex.schema
+
+        .createTable('usuario', table => {
+            table.increments('id');
+            table.string('nome', 255).notNullable();
+            table.string('nome_de_usuario', 255).notNullable();
+            table.string('descricao', 255);
+            table.date('dt_criacao').notNullable();
+            table.date('dt_aniversario').notNullable();
+            table.boolean('figura_publica').notNullable();
+            table.string('image_link', 512).notNullable();
+            table.string('email', 255).notNullable();
+        })
         .createTable('usuario_usuario', table => {
             table.increments('id');
-            table.integer('usuario_id').references('id').inTable('usuario');
-            table.integer('usuario_seguido_id').references('id').inTable('usuario');
+            table.integer('usuario_id').references('id').inTable('usuario').notNullable();
+            table.integer('usuario_seguido_id').references('id').inTable('usuario').notNullable();
             table.integer('pendente').notNullable();
         })
         .createTable('posts', table => {
