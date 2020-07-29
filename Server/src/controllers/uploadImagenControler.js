@@ -7,16 +7,20 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const datetimestamp = Date.now();
-        cb(
-            null,
-            file.fieldname +
-            "-" +
-            datetimestamp +
-            "." +
-            file.originalname.split(".")[
-            file.originalname.split(".").length - 1
-            ]
-        );
+        try {
+            cb(
+                null,
+                file.fieldname +
+                    "-" +
+                    datetimestamp +
+                    "." +
+                    file.originalname.split(".")[
+                        file.originalname.split(".").length - 1
+                    ]
+            );
+        } catch (err) {
+            cb(err);
+        }
     },
 });
 
@@ -24,14 +28,15 @@ const upload = multer({
     storage: storage,
     fileFilter: function (req, file, callback) {
         if (
-            ["jpg", "png, jpeg"].indexOf(
+            ["png", "jpg", "jpeg"].indexOf(
                 file.originalname.split(".")[
-                file.originalname.split(".").length - 1
+                    file.originalname.split(".").length - 1
                 ]
             ) === -1
         ) {
             return callback(new Error("Wrong extension type"));
         }
+
         callback(null, true);
     },
 });
