@@ -11,7 +11,6 @@ const Routes = () => {
 
     //modificar para esperar na SplashScreen
     //react-native-splash-screen
-
     if (!RobotoFamily() && !loading) {
         return (
             <View

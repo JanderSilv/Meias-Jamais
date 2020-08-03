@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { AsyncStorage } from 'react-native';
-import * as auth from '../services/auth';
 import api from '../services/api';
+import ApiService from '../variables/ApiService';
 
 const AuthContext = createContext({ signed: false, user: {} });
 
@@ -19,9 +19,7 @@ export const AuthProvider = ({ children }) => {
                 '@Meias?Jamais:token'
             );
 
-            // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-            if (storagedUser && storagedToken) {
+            if (storagedToken) {
                 api.defaults.headers[
                     'Authorization'
                 ] = `Bearer ${storagedToken}`;
@@ -33,27 +31,27 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     function Login(data) {
-        auth.signIn()
+        return ApiService.Login(data)
             .then(async (response) => {
                 // console.log(response);
-
-                setUser(response.user);
+                setUser(response.data.user);
 
                 api.defaults.headers[
                     'Authorization'
-                ] = `Bearer ${response.token}`;
+                ] = `Bearer ${response.data.token}`;
 
                 await AsyncStorage.setItem(
                     '@Meias?Jamais:user',
-                    JSON.stringify(response.user)
+                    JSON.stringify(response.data.user)
                 );
                 await AsyncStorage.setItem(
                     '@Meias?Jamais:token',
-                    response.token
+                    response.data.token
                 );
             })
             .catch((error) => {
-                console.error(error);
+                // console.log(error);
+                return Promise.reject(error);
             });
     }
 

@@ -17,6 +17,7 @@ import Constants from 'expo-constants';
 
 import AuthContext from '../../contexts/auth';
 import RobotoFamily from '../../utils/RobotoFamily';
+import ApiService from '../../variables/ApiService';
 
 import { style } from './styles';
 import Logo from '../../assets/logo/logo.png';
@@ -34,13 +35,21 @@ export default function Login() {
     });
 
     useEffect(() => {
-        register({ name: 'user' }, { required: true });
+        register({ name: 'login' }, { required: true });
         register({ name: 'password' }, { required: true });
+        return;
     }, [register]);
 
     function handleLogin(data) {
-        Login(data);
+        Login(data)
+            .then((response) => {
+                // console.log(response);
+            })
+            .catch((error) => {
+                // console.log('Login:', error);
+            });
     }
+
     if (!RobotoFamily()) {
         return <AppLoading />;
     } else {
@@ -81,10 +90,10 @@ export default function Login() {
                                 placeholder="Email ou Usuário"
                                 placeholderTextColor="#F5F5F5"
                                 style={[style.inputText, style.fontFamily]}
-                                onChangeText={(text) => setValue('user', text)}
+                                onChangeText={(text) => setValue('login', text)}
                             />
                         </View>
-                        {errors.user && (
+                        {errors.login && (
                             <RequiredMessage
                                 primary
                                 style={{
