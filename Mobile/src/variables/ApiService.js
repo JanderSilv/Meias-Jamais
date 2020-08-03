@@ -1,6 +1,19 @@
 import api from '../services/api';
 
 const ApiService = {
+    Register: (data = {}) => {
+        return api
+            .post('/user/create', data)
+            .then((response) => {
+                console.log(response);
+                return response;
+            })
+            .catch((error) => {
+                console.log(error);
+                return Promise.reject(error);
+            });
+    },
+
     Login: (data = {}) => {
         // console.log(Promise.resolve(data));
         return api
@@ -21,19 +34,6 @@ const ApiService = {
             .then((response) => {
                 console.log(response);
                 return Promise.resolve(response);
-            })
-            .catch((error) => {
-                console.log(error);
-                return Promise.reject(error);
-            });
-    },
-
-    Register: (data = {}) => {
-        return api
-            .post('/user/create', data)
-            .then((response) => {
-                console.log(response);
-                return response;
             })
             .catch((error) => {
                 console.log(error);

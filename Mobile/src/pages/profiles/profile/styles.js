@@ -23,6 +23,7 @@ export const style = StyleSheet.create({
     userImage: {
         width: 65,
         height: 65,
+        borderRadius: 100,
         resizeMode: 'contain',
     },
 

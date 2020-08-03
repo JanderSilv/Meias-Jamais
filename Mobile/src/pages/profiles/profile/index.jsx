@@ -25,7 +25,7 @@ import CategoryIcon from '../../../assets/main/categoryIcon.png';
 import ProductImage from '../../../assets/main/productImage.png';
 
 export default function Profile() {
-    const { Logout } = useContext(AuthContext);
+    const { Logout, user } = useContext(AuthContext);
 
     const navigation = useNavigation();
 
@@ -74,7 +74,10 @@ export default function Profile() {
                             maxwidth: 100,
                         }}
                     >
-                        <Image source={UserImage} style={style.userImage} />
+                        <Image
+                            source={{ uri: user.image_link }}
+                            style={style.userImage}
+                        />
                     </View>
                     <View style={style.centerContainer}>
                         <TouchableOpacity
@@ -136,13 +139,10 @@ export default function Profile() {
                     </View>
                 </View>
                 <View style={{ marginTop: 5 }}>
-                    <Text style={style.userName}>Tyler Nyx</Text>
-                    <Text style={style.userTag}>@TylerNyx</Text>
+                    <Text style={style.userName}>{user.nome}</Text>
+                    <Text style={style.userTag}>{`@${user.nome_usuario}`}</Text>
                 </View>
-                <Text style={style.descriptionText}>
-                    Quer me enviar um presente e não sabe o que? Essa é uma
-                    lista de alguns que eu gostaria de receber.
-                </Text>
+                <Text style={style.descriptionText}>{user.descricao}</Text>
             </View>
             <View style={{ paddingTop: 20 }}>
                 {/* ProductsHeader */}

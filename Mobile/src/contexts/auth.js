@@ -34,19 +34,20 @@ export const AuthProvider = ({ children }) => {
         return ApiService.Login(data)
             .then(async (response) => {
                 // console.log(response);
-                setUser(response.data.user);
-
                 api.defaults.headers[
                     'Authorization'
                 ] = `Bearer ${response.data.token}`;
 
                 await AsyncStorage.setItem(
-                    '@Meias?Jamais:user',
-                    JSON.stringify(response.data.user)
-                );
-                await AsyncStorage.setItem(
                     '@Meias?Jamais:token',
                     response.data.token
+                );
+
+                const UserResponse = await ApiService.GetUserData();
+
+                await AsyncStorage.setItem(
+                    '@Meias?Jamais:user',
+                    JSON.stringify(UserResponse.data[0])
                 );
             })
             .catch((error) => {
