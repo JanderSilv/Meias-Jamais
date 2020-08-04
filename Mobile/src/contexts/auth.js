@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { AsyncStorage } from 'react-native';
 import api from '../services/api';
-import ApiService from '../variables/ApiService';
+import ApiService, { setUserId } from '../variables/ApiService';
 
 const AuthContext = createContext({ signed: false, user: {} });
 
@@ -12,18 +12,19 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         async function loadStoragedData() {
             // Trocar as buscas abaixo por um MultiGet
-            const storagedUser = await AsyncStorage.getItem(
-                '@Meias?Jamais:user'
-            );
+            let storagedUser = await AsyncStorage.getItem('@Meias?Jamais:user');
             const storagedToken = await AsyncStorage.getItem(
                 '@Meias?Jamais:token'
             );
+
+            storagedUser = JSON.parse(storagedUser);
 
             if (storagedToken) {
                 api.defaults.headers[
                     'Authorization'
                 ] = `Bearer ${storagedToken}`;
-                setUser(JSON.parse(storagedUser));
+                setUser(storagedUser);
+                setUserId(storagedUser.id);
                 setLoading(false);
             }
         }
@@ -43,12 +44,14 @@ export const AuthProvider = ({ children }) => {
                     response.data.token
                 );
 
-                const UserResponse = await ApiService.GetUserData();
+                const userResponse = await ApiService.GetUserData();
 
                 await AsyncStorage.setItem(
                     '@Meias?Jamais:user',
-                    JSON.stringify(UserResponse.data[0])
+                    JSON.stringify(userResponse.data[0])
                 );
+
+                setUserId(userResponse.data[0].id);
             })
             .catch((error) => {
                 // console.log(error);

@@ -1,5 +1,10 @@
 import api from '../services/api';
 
+let userId;
+export const setUserId = (user_id) => {
+    return (userId = user_id);
+};
+
 const ApiService = {
     Register: (data = {}) => {
         return api
@@ -33,6 +38,32 @@ const ApiService = {
             .get('/user/getCurrentUser')
             .then((response) => {
                 console.log(response);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                return Promise.reject(error);
+            });
+    },
+
+    GetFollowers: () => {
+        return api
+            .get(`/user/getFollower/${userId}`)
+            .then((response) => {
+                // console.log(response);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                return Promise.reject(error);
+            });
+    },
+
+    GetFollowing: () => {
+        return api
+            .get(`/user/getFollowing/${userId}`)
+            .then((response) => {
+                // console.log(response);
                 return Promise.resolve(response);
             })
             .catch((error) => {

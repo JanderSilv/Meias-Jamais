@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useContext, useMemo, useEffect } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import {
     FontAwesome5,
@@ -17,10 +17,10 @@ import { useNavigation } from '@react-navigation/native';
 import { style, triggerStyles, optionsStyles } from './styles';
 
 import AuthContext from '../../../contexts/auth';
+import ApiService from '../../../variables/ApiService';
 
 import AddProduct from './addProduct';
 import EditProduct from './editProduct';
-import UserImage from '../../../assets/profile/userImage.png';
 import CategoryIcon from '../../../assets/main/categoryIcon.png';
 import ProductImage from '../../../assets/main/productImage.png';
 
@@ -29,6 +29,21 @@ export default function Profile() {
 
     const navigation = useNavigation();
 
+    const [followers, setFollowers] = useState({});
+    const [following, setFollowing] = useState({});
+
+    useEffect(() => {
+        ApiService.GetFollowers().then((response) => {
+            // console.log('GetFollowers_success:', response);
+            setFollowers(response.data);
+        });
+        ApiService.GetFollowing().then((response) => {
+            // console.log('GetFollowing_success:', response);
+            setFollowing(response.data);
+        });
+    }, []);
+
+    //#region ModalsSetup
     const [showAddProduct, setShowAddProduct] = useState(false);
     const [showEditProduct, setShowShowProduct] = useState(false);
 
@@ -63,6 +78,7 @@ export default function Profile() {
             />
         );
     }, [showEditProduct]);
+    //#endregion
 
     return (
         <View style={{ flex: 1 }}>
@@ -87,7 +103,9 @@ export default function Profile() {
                             }
                         >
                             <View style={style.followersContainer}>
-                                <Text style={style.followersCounter}>24</Text>
+                                <Text style={style.followersCounter}>
+                                    {followers.total}
+                                </Text>
                                 <FontAwesome5
                                     name="users"
                                     size={15}
@@ -97,7 +115,9 @@ export default function Profile() {
                             <Text
                                 style={[style.fontFamily, style.followersText]}
                             >
-                                Seguidores
+                                {followers.total > 1
+                                    ? 'Seguidores'
+                                    : 'Seguidor'}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -113,7 +133,7 @@ export default function Profile() {
                                         style.followersCounter,
                                     ]}
                                 >
-                                    30
+                                    {following.total}
                                 </Text>
                                 <FontAwesome5
                                     name="user-friends"
