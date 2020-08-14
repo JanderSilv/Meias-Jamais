@@ -1,5 +1,5 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
 import {
     FontAwesome5,
     MaterialIcons,
@@ -24,23 +24,105 @@ import EditProduct from './editProduct';
 import CategoryIcon from '../../../assets/main/categoryIcon.png';
 import ProductImage from '../../../assets/main/productImage.png';
 
-export default function Profile() {
+const Header = () => {
     const { Logout, user } = useContext(AuthContext);
 
     const navigation = useNavigation();
+    return (
+        <View style={style.headerBackground}>
+            <View style={style.topContainer}>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        maxwidth: 100,
+                    }}
+                >
+                    <Image
+                        source={{ uri: user.image_link }}
+                        style={style.userImage}
+                    />
+                </View>
+                <View style={style.centerContainer}>
+                    <TouchableOpacity
+                        style={style.followersWrapper}
+                        onPress={() =>
+                            navigation.navigate('Followers', { index: 0 })
+                        }
+                    >
+                        <View style={style.followersContainer}>
+                            <Text style={style.followersCounter}>30</Text>
+                            <FontAwesome5
+                                name="users"
+                                size={15}
+                                color="white"
+                            />
+                        </View>
+                        <Text style={[style.fontFamily, style.followersText]}>
+                            {30 > 1 ? 'Seguidores' : 'Seguidor'}
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={style.followersWrapper}
+                        onPress={() =>
+                            navigation.navigate('Followers', { index: 1 })
+                        }
+                    >
+                        <View style={style.followersContainer}>
+                            <Text
+                                style={[
+                                    style.fontFamily,
+                                    style.followersCounter,
+                                ]}
+                            >
+                                50
+                            </Text>
+                            <FontAwesome5
+                                name="user-friends"
+                                size={15}
+                                color="white"
+                            />
+                        </View>
+                        <Text style={[style.fontFamily, style.followersText]}>
+                            Seguindo
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <TouchableOpacity onPress={Logout}>
+                        <MaterialIcons
+                            name="settings"
+                            size={23}
+                            color="white"
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{ marginTop: 5 }}>
+                <Text style={style.userName}>{user.nome}</Text>
+                <Text style={style.userTag}>{`@${user.nome_usuario}`}</Text>
+            </View>
+            <Text style={style.descriptionText}>{user.descricao}</Text>
+        </View>
+    );
+};
 
+export default function Profile() {
     const [followers, setFollowers] = useState({});
     const [following, setFollowing] = useState({});
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        ApiService.GetFollowers().then((response) => {
-            // console.log('GetFollowers_success:', response);
-            setFollowers(response.data);
+        ApiService.MyPosts().then((response) => {
+            setPosts(response.data);
         });
-        ApiService.GetFollowing().then((response) => {
-            // console.log('GetFollowing_success:', response);
-            setFollowing(response.data);
-        });
+        //     ApiService.GetFollowers().then((response) => {
+        //         // console.log('GetFollowers_success:', response);
+        //         setFollowers(response.data);
+        //     });
+        //     ApiService.GetFollowing().then((response) => {
+        //         // console.log('GetFollowing_success:', response);
+        //         setFollowing(response.data);
+        //     });
     }, []);
 
     //#region ModalsSetup
@@ -82,89 +164,8 @@ export default function Profile() {
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={style.headerBackground}>
-                <View style={style.topContainer}>
-                    <View
-                        style={{
-                            alignItems: 'center',
-                            maxwidth: 100,
-                        }}
-                    >
-                        <Image
-                            source={{ uri: user.image_link }}
-                            style={style.userImage}
-                        />
-                    </View>
-                    <View style={style.centerContainer}>
-                        <TouchableOpacity
-                            style={style.followersWrapper}
-                            onPress={() =>
-                                navigation.navigate('Followers', { index: 0 })
-                            }
-                        >
-                            <View style={style.followersContainer}>
-                                <Text style={style.followersCounter}>
-                                    {followers.total}
-                                </Text>
-                                <FontAwesome5
-                                    name="users"
-                                    size={15}
-                                    color="white"
-                                />
-                            </View>
-                            <Text
-                                style={[style.fontFamily, style.followersText]}
-                            >
-                                {followers.total > 1
-                                    ? 'Seguidores'
-                                    : 'Seguidor'}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={style.followersWrapper}
-                            onPress={() =>
-                                navigation.navigate('Followers', { index: 1 })
-                            }
-                        >
-                            <View style={style.followersContainer}>
-                                <Text
-                                    style={[
-                                        style.fontFamily,
-                                        style.followersCounter,
-                                    ]}
-                                >
-                                    {following.total}
-                                </Text>
-                                <FontAwesome5
-                                    name="user-friends"
-                                    size={15}
-                                    color="white"
-                                />
-                            </View>
-                            <Text
-                                style={[style.fontFamily, style.followersText]}
-                            >
-                                Seguindo
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={Logout}>
-                            <MaterialIcons
-                                name="settings"
-                                size={23}
-                                color="white"
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={{ marginTop: 5 }}>
-                    <Text style={style.userName}>{user.nome}</Text>
-                    <Text style={style.userTag}>{`@${user.nome_usuario}`}</Text>
-                </View>
-                <Text style={style.descriptionText}>{user.descricao}</Text>
-            </View>
-            <View style={{ paddingTop: 20 }}>
+            <Header />
+            <View style={{ paddingVertical: 20 }}>
                 {/* ProductsHeader */}
                 <View style={style.wishListHeaderContainer}>
                     <Text style={style.wishListHeaderTitle}>
@@ -181,105 +182,127 @@ export default function Profile() {
                     </TouchableOpacity>
                 </View>
                 {/* Wishlist */}
-                <View style={style.wishListContainer}>
-                    {/* ProductContainer */}
-                    <View style={style.productContainer}>
-                        <View>
-                            <View style={style.categoryContainer}>
+                <FlatList
+                    data={posts}
+                    keyExtractor={(item) => item.id.toString()}
+                    style={{
+                        marginTop: 20,
+                    }}
+                    contentContainerStyle={style.wishListContainer}
+                    renderItem={({ item, index }) => (
+                        <View style={style.productContainer}>
+                            <View style={{ flex: 1 }}>
+                                <View style={style.categoryContainer}>
+                                    <Image
+                                        source={CategoryIcon}
+                                        style={style.categoryIcon}
+                                    />
+                                    <Text style={style.categoryText}>
+                                        Livro
+                                    </Text>
+                                </View>
+                                <Text style={style.productTitle}>
+                                    {item.produto_nome}
+                                </Text>
+                                <Text style={style.productDescription}>
+                                    {item.produto_descricao}
+                                </Text>
+                                <View style={style.buttonsContainer}>
+                                    <TouchableOpacity>
+                                        <FontAwesome
+                                            name="heart-o"
+                                            size={20}
+                                            color="white"
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={style.messageContainer}
+                                    >
+                                        <Feather
+                                            name="message-circle"
+                                            size={20}
+                                            color="white"
+                                        />
+                                        <Text style={style.messageCount}>
+                                            10
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <TouchableOpacity
+                                style={style.productImageContainer}
+                            >
                                 <Image
-                                    source={CategoryIcon}
-                                    style={style.categoryIcon}
+                                    source={
+                                        item.produto_image
+                                            ? {
+                                                  uri: item.produto_image,
+                                              }
+                                            : ProductImage
+                                    }
+                                    style={style.productImage}
                                 />
-                                <Text style={style.categoryText}>Livro</Text>
-                            </View>
-                            <Text style={style.productText}>
-                                Neurociência Para Leigos
-                            </Text>
-                            <View style={style.buttonsContainer}>
-                                <TouchableOpacity>
-                                    <FontAwesome
-                                        name="heart-o"
-                                        size={20}
-                                        color="white"
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={style.messageContainer}
-                                >
+                            </TouchableOpacity>
+                            <Menu>
+                                <MenuTrigger customStyles={triggerStyles}>
                                     <Feather
-                                        name="message-circle"
+                                        name="more-vertical"
                                         size={20}
                                         color="white"
                                     />
-                                    <Text style={style.messageCount}>10</Text>
-                                </TouchableOpacity>
-                            </View>
+                                </MenuTrigger>
+                                <MenuOptions customStyles={optionsStyles}>
+                                    <MenuOption
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-evenly',
+                                        }}
+                                        onSelect={handleOpenEditProductModal}
+                                    >
+                                        <FontAwesome5
+                                            name="pencil-alt"
+                                            size={18}
+                                            color="#535353"
+                                        />
+                                        <Text
+                                            style={{
+                                                marginLeft: 10,
+                                                color: '#535353',
+                                                fontSize: 16,
+                                            }}
+                                        >
+                                            Editar
+                                        </Text>
+                                    </MenuOption>
+                                    <MenuOption
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-evenly',
+                                        }}
+                                        onSelect={() => alert(`Delete`)}
+                                    >
+                                        <MaterialIcons
+                                            name="delete-forever"
+                                            size={25}
+                                            color="#FF6B6B"
+                                        />
+                                        <Text
+                                            style={{
+                                                marginLeft: 10,
+                                                color: '#FF6B6B',
+                                                fontSize: 16,
+                                            }}
+                                        >
+                                            Excluir
+                                        </Text>
+                                    </MenuOption>
+                                </MenuOptions>
+                            </Menu>
                         </View>
-                        <TouchableOpacity style={style.productImageContainer}>
-                            <Image
-                                source={ProductImage}
-                                style={style.productImage}
-                            />
-                        </TouchableOpacity>
-                        <Menu>
-                            <MenuTrigger customStyles={triggerStyles}>
-                                <Feather
-                                    name="more-vertical"
-                                    size={20}
-                                    color="white"
-                                />
-                            </MenuTrigger>
-                            <MenuOptions customStyles={optionsStyles}>
-                                <MenuOption
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-evenly',
-                                    }}
-                                    onSelect={handleOpenEditProductModal}
-                                >
-                                    <FontAwesome5
-                                        name="pencil-alt"
-                                        size={18}
-                                        color="#535353"
-                                    />
-                                    <Text
-                                        style={{
-                                            marginLeft: 10,
-                                            color: '#535353',
-                                            fontSize: 16,
-                                        }}
-                                    >
-                                        Editar
-                                    </Text>
-                                </MenuOption>
-                                <MenuOption
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-evenly',
-                                    }}
-                                    onSelect={() => alert(`Delete`)}
-                                >
-                                    <MaterialIcons
-                                        name="delete-forever"
-                                        size={25}
-                                        color="#FF6B6B"
-                                    />
-                                    <Text
-                                        style={{
-                                            marginLeft: 10,
-                                            color: '#FF6B6B',
-                                            fontSize: 16,
-                                        }}
-                                    >
-                                        Excluir
-                                    </Text>
-                                </MenuOption>
-                            </MenuOptions>
-                        </Menu>
-                    </View>
-                </View>
+                    )}
+                />
             </View>
             {EditProductModal}
             {AddProductModal}

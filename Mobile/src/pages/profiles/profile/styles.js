@@ -110,8 +110,8 @@ export const style = StyleSheet.create({
     //#region WishListStyles
     wishListContainer: {
         width: '94%',
-        marginTop: 20,
-        paddingVertical: 20,
+        paddingTop: 20,
+        paddingBottom: '50%',
         backgroundColor: '#F1F1F1',
         borderRadius: 9,
         elevation: 4,
@@ -120,8 +120,9 @@ export const style = StyleSheet.create({
     },
 
     productContainer: {
-        width: '90%',
-        height: 116,
+        width: '95%',
+        minHeight: 116,
+        marginBottom: 20,
 
         paddingVertical: 10,
         paddingLeft: 20,
@@ -150,10 +151,16 @@ export const style = StyleSheet.create({
         fontFamily: 'Roboto-Light',
     },
 
-    productText: {
+    productTitle: {
         marginTop: 10,
         color: 'white',
         fontSize: 16,
+        fontFamily: 'Roboto-Light',
+    },
+
+    productDescription: {
+        marginTop: 5,
+        color: '#F5F5F5',
         fontFamily: 'Roboto-Light',
     },
 
@@ -173,7 +180,7 @@ export const style = StyleSheet.create({
     },
 
     productImageContainer: {
-        flex: 1,
+        flex: 0.4,
         alignItems: 'center',
         justifyContent: 'center',
     },
