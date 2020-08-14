@@ -6,6 +6,7 @@ export const setUserId = (user_id) => {
 };
 
 const ApiService = {
+    //#region AuthRoutes
     Register: (data = {}) => {
         return api
             .post('/user/create', data)
@@ -32,7 +33,9 @@ const ApiService = {
                 return Promise.reject(error);
             });
     },
+    //#endregion
 
+    //#region UserData
     GetUserData: () => {
         return api
             .get('/user/getCurrentUser')
@@ -64,6 +67,46 @@ const ApiService = {
             .get(`/user/getFollowing/${userId}`)
             .then((response) => {
                 // console.log(response);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                return Promise.reject(error);
+            });
+    },
+    //#endregion
+
+    MyPosts: () => {
+        return api
+            .get(`/post/index/${userId}`)
+            .then((response) => {
+                // console.log('AS_MyPosts: ', response.data);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                return Promise.reject(error);
+            });
+    },
+
+    ShowPost: (product_id) => {
+        return api
+            .get(`/post/${product_id}`)
+            .then((response) => {
+                console.log('AS_ShowPost: ', response.data);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                return Promise.reject(error);
+            });
+    },
+
+    CreatePost: (product = {}) => {
+        return api
+            .post('/post/create', product)
+            .then((response) => {
+                console.log(response);
                 return Promise.resolve(response);
             })
             .catch((error) => {
