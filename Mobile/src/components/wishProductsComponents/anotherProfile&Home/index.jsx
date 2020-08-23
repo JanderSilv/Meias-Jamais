@@ -3,9 +3,9 @@ import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { AntDesign, FontAwesome, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-import { style } from './styles';
 import CategoryIcon from '../../../assets/main/categoryIcon.png';
 import ProductImage from '../../../assets/main/productImage.png';
+import { style } from './styles';
 
 const WishProduct = () => {
     const navigation = useNavigation();
@@ -20,7 +20,14 @@ const WishProduct = () => {
                 <Text style={style.productText}>Neurociência Para Leigos</Text>
                 <View style={style.buttonsContainer}>
                     <TouchableOpacity>
-                        <FontAwesome name="heart-o" size={20} color="white" />
+                        <FontAwesome
+                            name="heart-o"
+                            size={20}
+                            color="white"
+                            style={{
+                                color: 'white',
+                            }}
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Messages')}
