@@ -90,6 +90,7 @@ const ApiService = {
     },
 
     ShowPost: (product_id) => {
+        // console.log('AS_showPost_ProductId: ', product_id);
         return api
             .get(`/post/${product_id}`)
             .then((response) => {
@@ -97,13 +98,12 @@ const ApiService = {
                 return Promise.resolve(response);
             })
             .catch((error) => {
-                console.log(error);
+                console.log('AS_ShowPost: ', error);
                 return Promise.reject(error);
             });
     },
 
     CreatePost: (product = {}) => {
-        console.log('product: ', product, 'userId: ', userId);
         return api
             .post(`/post/create`, product)
             .then((response) => {
@@ -112,6 +112,19 @@ const ApiService = {
             })
             .catch((error) => {
                 console.log('AS_CreatePost: ', error);
+                return Promise.reject(error);
+            });
+    },
+
+    EditPost: (product_id = 0, product = {}) => {
+        return api
+            .put(`/post/update/${product_id}`, product)
+            .then((response) => {
+                console.log('AS_UpdatePost: ', response);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log('AS_UpdatePost: ', error);
                 return Promise.reject(error);
             });
     },

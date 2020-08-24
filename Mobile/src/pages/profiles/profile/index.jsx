@@ -110,6 +110,7 @@ export default function Profile() {
     const [followers, setFollowers] = useState({});
     const [following, setFollowing] = useState({});
     const [posts, setPosts] = useState([]);
+    const [currentPost, setCurrentPost] = useState({});
     const [reloadPosts, setReloadPosts] = useState(false);
 
     useEffect(() => {
@@ -128,7 +129,7 @@ export default function Profile() {
 
     //#region ModalsSetup
     const [showAddProduct, setShowAddProduct] = useState(false);
-    const [showEditProduct, setShowShowProduct] = useState(false);
+    const [showEditProduct, setShowEditProduct] = useState(false);
 
     const handleOpenAddProductModal = () => {
         setShowAddProduct(true);
@@ -137,11 +138,12 @@ export default function Profile() {
         setShowAddProduct(false);
     };
 
-    const handleOpenEditProductModal = () => {
-        setShowAddProduct(true);
+    const handleOpenEditProductModal = (current_post) => {
+        setCurrentPost(current_post);
+        setShowEditProduct(true);
     };
     const handleCloseEditProductModal = () => {
-        setShowAddProduct(false);
+        setShowEditProduct(false);
     };
 
     const AddProductModal = useMemo(() => {
@@ -160,9 +162,12 @@ export default function Profile() {
             <EditProduct
                 isOpen={showEditProduct}
                 onClose={handleCloseEditProductModal}
+                current={currentPost}
+                reloadPosts={reloadPosts}
+                setReloadPosts={setReloadPosts}
             />
         );
-    }, [showEditProduct]);
+    }, [showEditProduct, currentPost]);
     //#endregion
 
     const handleDeletePost = (product_id = 0) => {
@@ -267,7 +272,9 @@ export default function Profile() {
                                             alignItems: 'center',
                                             justifyContent: 'space-evenly',
                                         }}
-                                        onSelect={handleOpenEditProductModal}
+                                        onSelect={() =>
+                                            handleOpenEditProductModal(item)
+                                        }
                                     >
                                         <FontAwesome5
                                             name="pencil-alt"

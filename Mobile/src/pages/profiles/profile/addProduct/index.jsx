@@ -66,6 +66,7 @@ export default function AddProduct(props) {
             ? ApiService.UploadImage(image).then(async (response) => {
                   (product.produto_image = response.data.url),
                       await ApiService.CreatePost(product).catch(() => {
+                          return;
                           // deletar imagem
                       });
                   onClose();
