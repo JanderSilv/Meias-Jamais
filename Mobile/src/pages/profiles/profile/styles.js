@@ -79,6 +79,7 @@ export const style = StyleSheet.create({
 
     //#region WishListHeaderStyles
     wishListHeaderContainer: {
+        marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -111,7 +112,6 @@ export const style = StyleSheet.create({
     wishListContainer: {
         width: '94%',
         paddingTop: 20,
-        paddingBottom: '50%',
         backgroundColor: '#F1F1F1',
         borderRadius: 9,
         elevation: 4,

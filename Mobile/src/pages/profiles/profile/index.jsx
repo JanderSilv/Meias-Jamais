@@ -165,7 +165,7 @@ export default function Profile() {
     return (
         <View style={{ flex: 1 }}>
             <Header />
-            <View style={{ paddingVertical: 20 }}>
+            <View style={{ flex: 1, paddingTop: 20 }}>
                 {/* ProductsHeader */}
                 <View style={style.wishListHeaderContainer}>
                     <Text style={style.wishListHeaderTitle}>
@@ -182,12 +182,10 @@ export default function Profile() {
                     </TouchableOpacity>
                 </View>
                 {/* Wishlist */}
+
                 <FlatList
                     data={posts}
                     keyExtractor={(item) => item.id.toString()}
-                    style={{
-                        marginTop: 20,
-                    }}
                     contentContainerStyle={style.wishListContainer}
                     renderItem={({ item, index }) => (
                         <View style={style.productContainer}>
