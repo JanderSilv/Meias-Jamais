@@ -1,5 +1,12 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
+import {
+    Alert,
+    View,
+    Image,
+    Text,
+    TouchableOpacity,
+    FlatList,
+} from 'react-native';
 import {
     FontAwesome5,
     MaterialIcons,
@@ -107,6 +114,8 @@ const Header = () => {
 };
 
 export default function Profile() {
+    const { user } = useContext(AuthContext);
+
     const [followers, setFollowers] = useState({});
     const [following, setFollowing] = useState({});
     const [posts, setPosts] = useState([]);
@@ -170,13 +179,28 @@ export default function Profile() {
     }, [showEditProduct, currentPost]);
     //#endregion
 
-    const handleDeletePost = (product_id = 0) => {
-        ApiService.RemovePost(product_id).catch(() => {
-            return;
-            // alert de erro
-        });
-        setReloadPosts(!reloadPosts);
-    };
+    const handleDeletePost = (product_id = 0) =>
+        Alert.alert(
+            'Deletar Post',
+            `Você quer realmente me apagar, ${user.nome.split(' ')[0]}?`,
+            [
+                {
+                    text: 'Não, te amo',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Sim, adeus!',
+                    onPress: async () => {
+                        await ApiService.RemovePost(product_id).catch(() => {
+                            return;
+                            // alert de erro
+                        }),
+                            setReloadPosts(!reloadPosts);
+                    },
+                },
+            ]
+            { cancelable: false }
+        );
 
     return (
         <View style={{ flex: 1 }}>
