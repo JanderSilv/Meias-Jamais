@@ -48,10 +48,11 @@ export const AuthProvider = ({ children }) => {
 
                 await AsyncStorage.setItem(
                     '@Meias?Jamais:user',
-                    JSON.stringify(userResponse.data[0])
+                    JSON.stringify(userResponse.data)
                 );
 
-                setUserId(userResponse.data[0].id);
+                setUserId(userResponse.data.id);
+                setUser(userResponse.data);
             })
             .catch((error) => {
                 // console.log(error);
