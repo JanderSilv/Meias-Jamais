@@ -103,14 +103,41 @@ const ApiService = {
     },
 
     CreatePost: (product = {}) => {
+        console.log('product: ', product, 'userId: ', userId);
         return api
-            .post('/post/create', product)
+            .post(`/post/create`, product)
             .then((response) => {
                 console.log(response);
                 return Promise.resolve(response);
             })
             .catch((error) => {
-                console.log(error);
+                console.log('AS_CreatePost: ', error);
+                return Promise.reject(error);
+            });
+    },
+
+    RemovePost: (product_id = 0) => {
+        return api
+            .delete(`/post/remove/${product_id}`)
+            .then((response) => {
+                console.log('AS_DeletePost: ', response);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log('AS_DeletePost: ', error);
+                return Promise.reject(error);
+            });
+    },
+
+    UploadImage: (image = {}) => {
+        return api
+            .post('/upload/image', image)
+            .then((response) => {
+                console.log('AS_ImageUpload: ', response);
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                console.log('AS_ImageUpload: ', error);
                 return Promise.reject(error);
             });
     },

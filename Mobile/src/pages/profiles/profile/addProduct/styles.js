@@ -24,7 +24,7 @@ export const style = StyleSheet.create({
     },
 
     modalTitle: {
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: 'Roboto-Light',
         alignSelf: 'center',
         textAlign: 'center',
@@ -59,6 +59,7 @@ export const style = StyleSheet.create({
     },
 
     inputContainer: {
+        marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -67,11 +68,13 @@ export const style = StyleSheet.create({
         width: '90%',
         height: 50,
         marginLeft: 2,
+        color: '#454545',
     },
 
     inputText: {
         marginLeft: 10,
         fontSize: 16,
+        color: '#454545',
     },
 
     addProductButton: {

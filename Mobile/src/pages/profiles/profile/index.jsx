@@ -110,6 +110,7 @@ export default function Profile() {
     const [followers, setFollowers] = useState({});
     const [following, setFollowing] = useState({});
     const [posts, setPosts] = useState([]);
+    const [reloadPosts, setReloadPosts] = useState(false);
 
     useEffect(() => {
         ApiService.MyPosts().then((response) => {
@@ -123,7 +124,7 @@ export default function Profile() {
         //         // console.log('GetFollowing_success:', response);
         //         setFollowing(response.data);
         //     });
-    }, []);
+    }, [reloadPosts]);
 
     //#region ModalsSetup
     const [showAddProduct, setShowAddProduct] = useState(false);
@@ -148,6 +149,8 @@ export default function Profile() {
             <AddProduct
                 isOpen={showAddProduct}
                 onClose={handleCloseAddProductModal}
+                reloadPosts={reloadPosts}
+                setReloadPosts={setReloadPosts}
             />
         );
     }, [showAddProduct]);
@@ -161,6 +164,14 @@ export default function Profile() {
         );
     }, [showEditProduct]);
     //#endregion
+
+    const handleDeletePost = (product_id = 0) => {
+        ApiService.RemovePost(product_id).catch(() => {
+            return;
+            // alert de erro
+        });
+        setReloadPosts(!reloadPosts);
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -279,7 +290,9 @@ export default function Profile() {
                                             alignItems: 'center',
                                             justifyContent: 'space-evenly',
                                         }}
-                                        onSelect={() => alert(`Delete`)}
+                                        onSelect={() =>
+                                            handleDeletePost(item.id)
+                                        }
                                     >
                                         <MaterialIcons
                                             name="delete-forever"

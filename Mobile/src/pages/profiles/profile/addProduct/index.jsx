@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { BlurView } from 'expo-blur';
 import {
     View,
@@ -15,16 +15,72 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+import AuthContext from '../../../../contexts/auth';
+import ApiService from '../../../../variables/ApiService';
 import { categorys } from '../../../../utils/productCategorys';
 import ImagePicker from '../../../../utils/ImagePicker';
 
 import { style } from './styles';
 
 export default function AddProduct(props) {
-    const { isOpen, onClose } = props;
+    const { user } = useContext(AuthContext);
+    const { isOpen, onClose, reloadPosts, setReloadPosts } = props;
 
-    const [categorySelected, setCategorySelected] = useState('');
     const [image, setImage] = useState(null);
+    const [categorySelected, setCategorySelected] = useState('');
+    const [name, setName] = useState('');
+    const [link, setLink] = useState('');
+    const [description, setDescription] = useState('');
+
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        const checkInputs = () => {
+            name && categorySelected
+                ? setIsDisabled(false)
+                : setIsDisabled(true);
+        };
+        checkInputs();
+    }, [name, categorySelected]);
+
+    const clearForm = () => {
+        setImage(null);
+        setCategorySelected('');
+        setName('');
+        setLink('');
+        setDescription('');
+        setIsDisabled(false);
+    };
+
+    const handleSubmit = () => {
+        let product = {
+            produto_nome: name,
+            categoria: categorySelected,
+            produto_descricao: description,
+            produto_link: link,
+            produto_image: '',
+            recebido: '',
+        };
+
+        image
+            ? ApiService.UploadImage(image).then(async (response) => {
+                  (product.produto_image = response.data.url),
+                      await ApiService.CreatePost(product).catch(() => {
+                          // deletar imagem
+                      });
+                  onClose();
+                  clearForm();
+                  setReloadPosts(!reloadPosts);
+              })
+            : ApiService.CreatePost(product).then(() => {
+                  onClose();
+                  clearForm();
+                  setReloadPosts(!reloadPosts);
+              });
+        // .catch(() =>
+        //       console.log('caí aqui')
+        //   );
+    };
 
     return (
         <Modal
@@ -43,8 +99,7 @@ export default function AddProduct(props) {
                         <TouchableWithoutFeedback>
                             <View style={style.modalBackground}>
                                 <Text style={style.modalTitle}>
-                                    Cadastre um novo produto na sua lista de
-                                    desejos
+                                    Adicionar item na sua lista de desejos:
                                 </Text>
 
                                 <ImagePicker
@@ -80,7 +135,6 @@ export default function AddProduct(props) {
                                                 itemIndex
                                             ) => setCategorySelected(itemValue)}
                                         >
-                                            {/* <ScrollView> */}
                                             <Picker.Item
                                                 label={'Categoria *'}
                                                 color={'#ABABAB'}
@@ -92,16 +146,10 @@ export default function AddProduct(props) {
                                                     value={category.value}
                                                 />
                                             ))}
-                                            {/* </ScrollView> */}
                                         </Picker>
                                     </View>
 
-                                    <View
-                                        style={{
-                                            marginBottom: 10,
-                                            ...style.inputContainer,
-                                        }}
-                                    >
+                                    <View style={style.inputContainer}>
                                         <Feather
                                             name="gift"
                                             size={30}
@@ -111,6 +159,8 @@ export default function AddProduct(props) {
                                             style={style.inputText}
                                             placeholder={'Nome do Produto *'}
                                             placeholderTextColor={'#ABABAB'}
+                                            value={name}
+                                            onChangeText={setName}
                                         />
                                     </View>
                                     <View style={style.inputContainer}>
@@ -123,11 +173,46 @@ export default function AddProduct(props) {
                                             style={style.inputText}
                                             placeholder={'Link para o Produto'}
                                             placeholderTextColor={'#ABABAB'}
+                                            value={link}
+                                            onChangeText={setLink}
+                                        />
+                                    </View>
+                                    <View>
+                                        <TextInput
+                                            multiline
+                                            numberOfLines={4}
+                                            maxLength={190}
+                                            style={{
+                                                marginLeft: 0,
+                                                paddingTop: 5,
+                                                paddingLeft: 5,
+
+                                                fontSize: 16,
+                                                color: '#707070',
+                                                textAlignVertical: 'top',
+
+                                                borderColor: '#b8b8b8',
+                                                borderWidth: 0.8,
+                                                borderRadius: 3,
+                                            }}
+                                            placeholder={'Descrição do Produto'}
+                                            placeholderTextColor={'#ABABAB'}
+                                            value={description}
+                                            onChangeText={setDescription}
                                         />
                                     </View>
                                 </View>
                                 <TouchableOpacity
-                                    style={style.addProductButton}
+                                    style={
+                                        isDisabled
+                                            ? {
+                                                  ...style.addProductButton,
+                                                  backgroundColor: 'gray',
+                                              }
+                                            : style.addProductButton
+                                    }
+                                    disabled={isDisabled}
+                                    onPress={handleSubmit}
                                 >
                                     <Text style={{ color: 'white' }}>
                                         Adicionar Produto
