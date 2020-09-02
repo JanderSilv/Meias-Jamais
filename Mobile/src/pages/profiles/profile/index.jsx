@@ -198,8 +198,8 @@ export default function Profile() {
                             setReloadPosts(!reloadPosts);
                     },
                 },
+                { cancelable: false },
             ]
-            { cancelable: false }
         );
 
     return (

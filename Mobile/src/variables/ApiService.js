@@ -7,16 +7,16 @@ export const setUserId = (user_id) => {
 
 const ApiService = {
     //#region AuthRoutes
-    Register: (data = {}) => {
+    RegisterUser: (user) => {
         return api
-            .post('/user/create', data)
+            .post('/user/create', user)
             .then((response) => {
-                console.log(response);
-                return response;
+                console.log('AS_RegisterUser: ', response);
+                return Promise.resolve(response);
             })
             .catch((error) => {
-                console.log(error);
-                return Promise.reject(error);
+                console.log('AS_RegisterUser: ', error.response);
+                return Promise.reject(error.response);
             });
     },
 
@@ -76,6 +76,7 @@ const ApiService = {
     },
     //#endregion
 
+    //#region PostsRoutes
     MyPosts: () => {
         return api
             .get(`/post/index/${userId}`)
@@ -141,6 +142,7 @@ const ApiService = {
                 return Promise.reject(error);
             });
     },
+    //#endregion
 
     UploadImage: (image = {}) => {
         return api

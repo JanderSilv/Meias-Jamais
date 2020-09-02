@@ -20,6 +20,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import DateFunctions from '../../utils/DateFunctions';
 import ImagePicker from '../../utils/ImagePicker';
+import ApiService from '../../variables/ApiService';
 
 import ErrorMessage from '../../components/ErrorsMessages/RequiredMessage';
 import AvatarImage from '../../assets/register/avatarImage.png';
@@ -50,7 +51,7 @@ const Register = () => {
 
     useEffect(() => {
         const CheckFirstPart = () => {
-            if (image && name && user && email && birthday)
+            if (name && user && email && birthday)
                 setIsFirstButtonDisabled(false);
         };
         CheckFirstPart();
@@ -72,14 +73,37 @@ const Register = () => {
     }, [password, confirmPassword]);
 
     const formSubmit = () => {
-        const data = {
-            name,
-            user,
+        let data = {
+            nome: name,
+            nome_usuario: user,
             email,
-            birthday,
-            password,
+            image_link: '',
+            figura_publica: false,
+            dt_criacao: new Date(),
+            dt_aniversario: birthday,
+            senha: password,
         };
-        console.log(data);
+        image
+            ? ApiService.UploadImage(image)
+                  .then(async (UploadImageResponse) => {
+                      //   data.image_link = UploadImageResponse.data.path;
+                      const registerUserResponse = await ApiService.RegisterUser(
+                          data
+                      ).catch(() => {
+                          //
+                      });
+                      //   console.log(
+                      //       'registerUserResponse: ',
+                      //       registerUserResponse
+                      //   );
+                      navigation.navigate('Login');
+                  })
+                  .catch(() => {
+                      //
+                  })
+            : ApiService.RegisterUser(data).catch(() => {
+                  //
+              });
     };
 
     return (
