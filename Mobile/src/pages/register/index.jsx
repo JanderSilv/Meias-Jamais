@@ -20,6 +20,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import DateFunctions from '../../utils/DateFunctions';
 import ImagePicker from '../../utils/ImagePicker';
+import useDebounce from '../../hooks/useDebounce';
 import ApiService from '../../variables/ApiService';
 
 import ErrorMessage from '../../components/ErrorsMessages/RequiredMessage';
@@ -31,7 +32,7 @@ import { style } from './styles';
 const Register = () => {
     // state controls
     const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
-    const [isFirstPartCompleted, setIsFirstPartCompleted] = useState(false);
+    const [isFirstPartCompleted, setIsFirstPartCompleted] = useState(true);
     const [isFirstButtonDisabled, setIsFirstButtonDisabled] = useState(true);
     const [isSecondButtonDisabled, setIsSecondButtonDisabled] = useState(true);
     const [isPasswordsEquals, setIsPasswordsEquals] = useState(null);
@@ -43,6 +44,8 @@ const Register = () => {
     const [birthday, setBirthday] = useState(null);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const debouncedConfirmPassword = useDebounce(confirmPassword, 500);
 
     const setDate = (event, date) => {
         setDatePickerIsOpen(false);
@@ -59,18 +62,15 @@ const Register = () => {
 
     useEffect(() => {
         const CheckSecondPart = () => {
-            setIsPasswordsEquals(null);
-            if (password && confirmPassword) {
-                setTimeout(() => {
-                    if (password === confirmPassword) {
-                        setIsPasswordsEquals(true);
-                        setIsSecondButtonDisabled(false);
-                    } else setIsPasswordsEquals(false);
-                }, 1000);
-            }
+            if (password && debouncedConfirmPassword) {
+                if (password === debouncedConfirmPassword) {
+                    setIsPasswordsEquals(true);
+                    setIsSecondButtonDisabled(false);
+                } else setIsPasswordsEquals(false);
+            } else setIsPasswordsEquals(null);
         };
         CheckSecondPart();
-    }, [password, confirmPassword]);
+    }, [password, debouncedConfirmPassword]);
 
     const formSubmit = () => {
         let data = {
