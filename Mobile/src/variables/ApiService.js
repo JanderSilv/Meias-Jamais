@@ -77,6 +77,9 @@ const ApiService = {
     //#endregion
 
     //#region PostsRoutes
+
+    MyFeed: () => api.post('/user/feed'),
+
     MyPosts: () => {
         return api
             .get(`/post/index/${userId}`)
@@ -145,14 +148,23 @@ const ApiService = {
     //#endregion
 
     UploadImage: (image = {}) => {
+        console.log(image);
+        const formData = new FormData();
+        formData.append('file', image);
+        console.log(formData);
+
         return api
-            .post('/upload/image', image)
+            .post('/upload/image', formData, {
+                headers: {
+                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                },
+            })
             .then((response) => {
                 console.log('AS_ImageUpload: ', response);
                 return Promise.resolve(response);
             })
             .catch((error) => {
-                console.log('AS_ImageUpload: ', error);
+                console.log('AS_ImageUpload: ', error.response);
                 return Promise.reject(error);
             });
     },
