@@ -15,27 +15,4 @@ export const style = StyleSheet.create({
     headerTitle: { color: 'white', fontSize: 28 },
 
     headerDescription: { marginTop: 10, color: 'white' },
-
-    postContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    postDescriptionContainer: {
-        marginVertical: 10,
-        paddingHorizontal: 50,
-        flexDirection: 'row',
-    },
-
-    userImage: {
-        width: 54,
-        height: 54,
-        borderRadius: 50,
-    },
-
-    postDescription: {
-        marginLeft: 10,
-        fontFamily: 'Roboto-Light',
-        fontSize: 16,
-    },
 });

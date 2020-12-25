@@ -1,22 +1,32 @@
-import React, { Fragment } from 'react';
-import {
-    View,
-    Text,
-    ImageBackground,
-    StatusBar,
-    Image,
-    TouchableOpacity,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { Fragment, useEffect, useState } from 'react';
+import { View, Text, ImageBackground, StatusBar, FlatList } from 'react-native';
+import ApiService from '../../variables/ApiService';
 
-import { style } from './styles';
+import Post from '../post';
+
 import HeaderBackground from '../../assets/main/headerBackground.png';
-import WishProduct from '../../components/wishProductsComponents/anotherProfile&Home';
-
-import AlexBracken from '../../assets/main/alexBracken.png';
+import { style } from './styles';
 
 export default function Home() {
-    const navigation = useNavigation();
+    const [loading, setLoading] = useState(true);
+    const [feed, setFeed] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        const fetchPosts = async () => {
+            try {
+                const response = await ApiService.MyFeed();
+                setFeed(response.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPosts();
+    }, []);
+
+    if (loading) return <Text>Carregando...</Text>;
 
     return (
         <Fragment>
@@ -34,27 +44,11 @@ export default function Home() {
                     </Text>
                 </ImageBackground>
                 {/* Posts */}
-                <View style={style.postContainer}>
-                    {/* PostTitle */}
-                    <View style={style.postDescriptionContainer}>
-                        <TouchableOpacity
-                            onPress={() =>
-                                navigation.navigate('AnotherProfile')
-                            }
-                        >
-                            <Image
-                                source={AlexBracken}
-                                style={style.userImage}
-                            />
-                        </TouchableOpacity>
-                        <Text style={style.postDescription}>
-                            Alex Bracken adicionou um novo item na lista de
-                            desejos
-                        </Text>
-                    </View>
-                    {/* ProductContainer */}
-                    <WishProduct />
-                </View>
+                <FlatList
+                    data={feed}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={() => <Post />}
+                />
             </View>
         </Fragment>
     );
