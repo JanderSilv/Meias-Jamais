@@ -15,4 +15,5 @@ export const categorys = [
     { label: 'Acessórios', value: '5' },
     { label: 'Comidas', value: '6' },
     { label: 'Maquiagem', value: '7' },
+    { label: 'Outros', value: '8' },
 ];
