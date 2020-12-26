@@ -1,71 +1,62 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { AsyncStorage } from 'react-native';
-import api from '../services/api';
-import ApiService, { setUserId } from '../variables/ApiService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { api, AuthApi, TypeUser } from '../services';
 
-const AuthContext = createContext({ signed: false, user: {} });
+type AuthContextData = {
+    signed: boolean;
+    user: TypeUser | null;
+    loading: boolean;
+    Login(data: TypeUser): void;
+    Logout(): void;
+};
 
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
+export const AuthProvider: React.FC = ({ children }) => {
+    const storageKey = '@Meias?Jamais';
+    const [user, setUser] = useState<TypeUser | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function loadStoragedData() {
+        const loadStoragedData = async () => {
             // Trocar as buscas abaixo por um MultiGet
-            let storagedUser = await AsyncStorage.getItem('@Meias?Jamais:user');
-            const storagedToken = await AsyncStorage.getItem(
-                '@Meias?Jamais:token'
-            );
+            const [storagedUser, storagedToken] = await AsyncStorage.multiGet([
+                `${storageKey}:user`,
+                `${storageKey}:token`,
+            ]);
 
-            storagedUser = JSON.parse(storagedUser);
-
-            if (storagedToken) {
+            if (storagedUser[1] && storagedToken[1]) {
                 api.defaults.headers[
                     'Authorization'
                 ] = `Bearer ${storagedToken}`;
-                setUser(storagedUser);
-                setUserId(storagedUser.id);
+                setUser(JSON.parse(storagedUser[1]));
                 setLoading(false);
-            }
-        }
+            } else return;
+        };
         loadStoragedData();
     }, []);
 
-    function Login(data) {
-        return ApiService.Login(data)
-            .then(async (response) => {
-                // console.log(response);
-                api.defaults.headers[
-                    'Authorization'
-                ] = `Bearer ${response.data.token}`;
+    const Login = async (data: TypeUser) => {
+        const response = await AuthApi.Login(data);
 
-                await AsyncStorage.setItem(
-                    '@Meias?Jamais:token',
-                    response.data.token
-                );
+        api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
 
-                const userResponse = await ApiService.GetUserData();
+        const storageUser = [
+            `${storageKey}:user`,
+            JSON.stringify(response.data.user),
+        ];
+        const storageToken = [`${storageKey}:token`, response.data.token];
 
-                await AsyncStorage.setItem(
-                    '@Meias?Jamais:user',
-                    JSON.stringify(userResponse.data)
-                );
+        await AsyncStorage.multiSet([storageUser, storageToken]);
+        setUser(response.data.user);
+    };
 
-                setUserId(userResponse.data.id);
-                setUser(userResponse.data);
-            })
-            .catch((error) => {
-                // console.log(error);
-                return Promise.reject(error);
-            });
-    }
-
-    function Logout() {
+    const Logout = () => {
         api.defaults.headers['Authorization'] = null;
         AsyncStorage.clear().then(() => {
             setUser(null);
         });
-    }
+    };
 
     return (
         <AuthContext.Provider
