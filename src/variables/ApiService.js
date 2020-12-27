@@ -19,20 +19,6 @@ const ApiService = {
                 return Promise.reject(error.response);
             });
     },
-
-    Login: (data = {}) => {
-        // console.log(Promise.resolve(data));
-        return api
-            .post('/user/login', data)
-            .then((response) => {
-                // console.log('AS_Login_success:', response);
-                return Promise.resolve(response);
-            })
-            .catch((error) => {
-                console.log('AS_Login_error:', error);
-                return Promise.reject(error);
-            });
-    },
     //#endregion
 
     //#region UserData
