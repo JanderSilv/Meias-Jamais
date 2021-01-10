@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+import { TypeProduct } from '../../../services/models/product';
+import { wishProducts as wishProductsData } from '../../../utils/data/wishProducts';
+
 import WishProduct from '../../../components/wishProductsComponents/anotherProfile&Home';
-
-import { style } from './styles';
 import UserImage from '../../../assets/anotherProfile/wassimChouak.png';
+import { style } from './styles';
 
-export default function AnotherProfile() {
+const AnotherProfile: React.FC = () => {
     const navigation = useNavigation();
+
+    const [loading, setLoading] = useState(true);
+    const [feed, setFeed] = useState<Array<TypeProduct>>([]);
+
+    useEffect(() => {
+        setLoading(true);
+        try {
+            setFeed(wishProductsData);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    if (loading) return <Text>Carregando...</Text>;
 
     return (
         <View style={{ flex: 1 }}>
@@ -86,19 +104,25 @@ export default function AnotherProfile() {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ paddingTop: 20 }}>
-                {/* ProductsHeader */}
-                <View style={style.wishListHeaderContainer}>
-                    <Text style={style.wishListHeaderTitle}>
-                        Lista de desejo de Wassim:
-                    </Text>
-                </View>
-                {/* Wishlist */}
-                <View style={style.wishListContainer}>
-                    {/* ProductContainer */}
-                    <WishProduct />
-                </View>
-            </View>
+            {/* ProductsHeader */}
+            {/* Wishlist */}
+            <FlatList
+                data={feed}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={style.wishListContainer}
+                ListHeaderComponent={() => (
+                    <View>
+                        <Text style={style.wishListHeaderTitle}>
+                            Lista de desejo de Wassim:
+                        </Text>
+                    </View>
+                )}
+                ListHeaderComponentStyle={style.wishListHeaderContainer}
+                ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+                renderItem={(product) => <WishProduct product={product.item} />}
+            />
         </View>
     );
-}
+};
+
+export default AnotherProfile;

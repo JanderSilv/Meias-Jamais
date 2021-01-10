@@ -1,24 +1,26 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { View, Text, ImageBackground, StatusBar, FlatList } from 'react-native';
-import ApiService from '../../variables/ApiService';
 
+import { TypePost } from '../../services/models/post';
 import Post from '../post';
-
 import HeaderBackground from '../../assets/main/headerBackground.png';
 import { style } from './styles';
 
+import { feed as feedData } from '../../utils/data/feed';
+
 export default function Home() {
     const [loading, setLoading] = useState(true);
-    const [feed, setFeed] = useState([]);
+    const [feed, setFeed] = useState<Array<TypePost>>([]);
 
     useEffect(() => {
         setLoading(true);
         const fetchPosts = async () => {
             try {
-                const response = await ApiService.MyFeed();
-                setFeed(response.data);
+                // const response = await ApiService.MyFeed();
+                // setFeed(response.data);
+                setFeed(feedData);
             } catch (error) {
-                console.log(error);
+                console.log('Home_FetchPosts: ', error.message);
             } finally {
                 setLoading(false);
             }
@@ -47,7 +49,10 @@ export default function Home() {
                 <FlatList
                     data={feed}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={() => <Post />}
+                    ItemSeparatorComponent={() => (
+                        <View style={{ height: 32 }} />
+                    )}
+                    renderItem={(post) => <Post post={post.item} />}
                 />
             </View>
         </Fragment>
